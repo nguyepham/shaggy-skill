@@ -1,7 +1,6 @@
 ---
-name: dev-skill
-description: Mandatory engineering route for repository inspection, planning, implementation, diagnosis, testing, review, refactoring, release, and roadmap closure.
-when_to_use: Use for every software-engineering task. Do not use for unrelated non-engineering requests.
+name: shaggy-skill
+description: Mandatory engineering route for repository inspection, planning, implementation, diagnosis, testing, review, refactoring, release, and roadmap closure. Use for every software-engineering task. Do not use for unrelated non-engineering requests.
 user-invocable: true
 disable-model-invocation: false
 ---
