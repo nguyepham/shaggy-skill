@@ -1,0 +1,15 @@
+{
+  "name": "devskill-rebon-guard",
+  "version": "2.3.0",
+  "description": "DevSkill native mutation guard for Rebon.",
+  "capabilities": {
+    "hooks": [
+      "hooks/guard.json"
+    ]
+  },
+  "requirements": {
+    "externalCommands": [
+      "node"
+    ]
+  }
+}

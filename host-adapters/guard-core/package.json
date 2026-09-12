@@ -1,0 +1,13 @@
+{
+  "name": "@devskill/guard-core",
+  "version": "2.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/http-server.mjs",
+    "mcp": "node src/mcp-server.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0"
+  }
+}

@@ -1,0 +1,63 @@
+# Host adapters
+
+Optional host integrations. Without an installed adapter, DevSkill remains `instruction-guided`.
+
+## Release installation
+
+Extract `DevSkill-Unslop-2.3.0-soft-guide.zip` first. To add a guarded host, extract the shared `DevSkill-Unslop-2.3.0-guard-core-patch.zip`, then one host patch into that same skill folder.
+
+| Host | Patch | Next step |
+|---|---|---|
+| Rebon | `DevSkill-Unslop-2.3.0-rebon-adapter-patch.zip` | [Rebon setup](./rebon/README.md) |
+| OpenCode | `DevSkill-Unslop-2.3.0-opencode-adapter-patch.zip` | [OpenCode setup](./opencode/README.md) |
+
+The Core patch is shared. Do not install a host patch without it.
+
+At DevSkill admission, Rebon and OpenCode ask whether to use the adapter or the soft guide only. Choose the adapter when a weaker model needs host-side behavior enforcement; a smart model can use the soft guide directly. Choose the matching launcher before the session starts; the selection checks live host state and does not toggle an already-running hook.
+
+## Boundary
+
+| Owns | Does not own |
+|---|---|
+| Host interception | Mode, stage, or semantic choice |
+| Guard state | Review, Decision, or completion |
+| Native tool and presentation gates | Core-runtime files or manifest |
+
+## Shared guard contract
+
+| Value | Meaning |
+|---|---|
+| Admitted profile | Confirmed provider, host, mode, and capabilities |
+| Current binding | Active owner, checkpoint, allowed state-changing action, exact target, return consumer |
+| `enter` | Create the first owner binding selected by Route |
+| `advance` | Replace one declared binding with its declared next binding |
+| `reject` | Block an out-of-sequence action or presentation without changing guard state |
+
+The adapter calls the Guard; the model never chooses whether to call it. The Guard maps only the portable Mode Gate, Route, and Host Enforcement contracts. It never creates project authority, accepts a review finding, chooses a stage, or declares completion.
+
+## Claim levels
+
+| Level | Required interception |
+|---|---|
+| `instruction-guided` | No host interception |
+| `mutation-guarded` | State-changing tool interception |
+| `tool-guarded` | Prompt or context re-entry and state-changing tool interception |
+| `full` | Prompt admission, model-dispatch re-entry, state-changing tool interception, and verified outbound engineering-presentation interception |
+
+An adapter may claim only the level its host integration has passed. An MCP server alone is not an interception layer.
+
+## Layout
+
+```text
+host-adapters/
+  README.md
+  guard-core/
+    shared guard and MCP server
+  rebon/
+    Rebon session plugin and launcher
+  <host>/
+    README.md
+    source and host configuration
+```
+
+Adapters are optional integration packages. Do not add them to `manifest.json` runtime files.

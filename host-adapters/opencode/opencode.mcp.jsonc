@@ -1,0 +1,16 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "devskill_guard": {
+      "type": "local",
+      "command": [
+        "node",
+        "E:/AI/Dev-Skill-Unslop/host-adapters/guard-core/src/mcp-server.mjs"
+      ],
+      "environment": {
+        "DEVSKILL_GUARD_URL": "http://127.0.0.1:7634"
+      },
+      "enabled": true
+    }
+  }
+}

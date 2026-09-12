@@ -12,6 +12,7 @@ Use only when a caller needs to classify host interception, enter an owning modu
 | `current operation` | Route has selected and loaded an owner and entered its first checkpoint |
 | `checkpoint-capable` | The host can map a future exact checkpoint; no current checkpoint is yet `enforced` |
 | `enforced` | The host can intercept the exact current checkpoint |
+| `mutation-guarded` | A trusted host adapter intercepts only a matching state-changing tool action and exact target; it is not checkpoint, route, or presentation enforcement |
 | `instruction-guided` | The host cannot intercept that checkpoint; the instruction still applies |
 
 ## Interactions
@@ -27,7 +28,7 @@ The current binding contains only admitted profile, current transition, active m
 ## Operation
 
 1. At admission, classify only whether the host can map a future exact checkpoint. Do not claim `enforced` before Route selects one.
-2. At entry or advance, classify the exact checkpoint the caller names. A hook elsewhere never makes the run globally `enforced`.
+2. At entry or advance, classify the exact checkpoint the caller names. A `mutation-guarded` adapter never makes the run globally `enforced`.
 3. At `enter`, a host with exact interception creates and holds the current binding only for the first checkpoint declared by Route's selected owner.
 4. At `advance`, a host with exact interception matches the current result or requested action and target to that binding, then replaces it with the declared next owner boundary before allowing its checkpoint, return, or state-changing action.
 5. An `instruction-guided` caller follows the same declared transition without claiming host enforcement.

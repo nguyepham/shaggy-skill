@@ -16,9 +16,9 @@ Use only this package for DevSkill runtime instructions. The package contains ru
 2. When admission is needed, load [Mode Gate](mode-gate.md); it returns an admitted profile and checkpoint-interception capability, or `mode_not_admitted`, to [Route](successor-v0/stage-0-route.md).
 3. When admission succeeds, load [Route](successor-v0/stage-0-route.md); it returns one family, overlay, or terminal and enters the selected owner's first declared checkpoint.
 4. When Route selects a family, load that family and only the modules named by its Runtime calls; each operation returns through its bounded-closure result to its declared consumer.
-5. When findings are needed, load [Review](successor-v0/modules/review.md); it returns findings to the calling operation. When the admitted host is Rebon, load [Rebon host adapter](successor-v0/modules/rebon-host-adapter.md); it returns native results to its declared consumer.
+5. When Mode Gate resolves host-adapter selection for Rebon or OpenCode, load the matching host adapter; it returns exact capability or unavailable interception to Mode Gate. When findings are needed, load [Review](successor-v0/modules/review.md); it returns findings to the calling operation. An admitted Rebon operation loads [Rebon host adapter](successor-v0/modules/rebon-host-adapter.md) for native results.
 
-Resolve all paths from this package root. Keep runtime checkpoints internal. State the selected host, mode, subagent use, and context optimization once when admission completes.
+Resolve all paths from this package root. Keep runtime checkpoints internal. State the selected host, mode, host-adapter choice, subagent use, and context optimization once when admission completes.
 
 ## Runtime references
 

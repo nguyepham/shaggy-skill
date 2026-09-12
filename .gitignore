@@ -1,0 +1,3 @@
+# Local host-adapter dependencies and host session state
+host-adapters/**/node_modules/
+host-adapters/rebon/.rebon/

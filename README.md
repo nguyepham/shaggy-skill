@@ -1,4 +1,4 @@
-# DevSkill Unslop 2.2.3
+# DevSkill Unslop 2.3.0
 
 > AI can write code faster than you can regret the architecture.
 >
@@ -36,7 +36,7 @@ flowchart TB
 
 | Family or overlay | Module or sub-operation | Job |
 |---|---|---|
-| Admission | Mode Gate | Confirm host, mode, and capability fit |
+| Admission | Mode Gate | Confirm host, mode, adapter choice, and capability fit |
 | Runtime | Host Enforcement | Enter and advance declared operation checkpoints when the host can intercept them |
 | Route | Route | Select one current consumer |
 | Route | Project Discovery | Establish greenfield, brownfield, or uncertain facts |
@@ -58,7 +58,8 @@ flowchart TB
 | Work | Diagnosing Bugs | Narrow symptoms to a supported cause |
 | Work | Handoff and Boundaries | Transfer work across a real boundary |
 | Work | Context Optimization | Bound reading, reasoning, writing, and continuation |
-| Work | Rebon Host Adapter | Use Rebon-native workflow and task tools |
+| Runtime | Rebon Host Adapter | Use Rebon-native tools and classify Guard capability |
+| Runtime | OpenCode Host Adapter | Classify OpenCode Guard capability |
 | Presentation | Write | Render reports, records, conversations, and instructions |
 | Presentation | Markdown Tables and Diagrams | Render a selected structure clearly |
 | Presentation | Writing Style | Select an explicit writing treatment |
@@ -115,6 +116,8 @@ Humans still own meaning, authority, and permissions.
 
 ## Installation
 
+### Soft guide
+
 ```bash
 npx skills@latest add shaggyfeng/Dev-Skill-Unslop
 ```
@@ -128,6 +131,21 @@ For Codex:
 ```
 
 Then describe the task normally. The skill routes the work.
+
+### Optional host adapters
+
+The source repository contains every adapter. Release assets let you install only what you use. Extract each selected archive into the same DevSkill folder.
+
+| Release asset | Install when | Requires |
+|---|---|---|
+| `DevSkill-Unslop-2.3.0-soft-guide.zip` | Always | Nothing else |
+| `DevSkill-Unslop-2.3.0-guard-core-patch.zip` | You want native host guarding | Soft guide |
+| `DevSkill-Unslop-2.3.0-rebon-adapter-patch.zip` | You use Rebon | Soft guide + Guard Core |
+| `DevSkill-Unslop-2.3.0-opencode-adapter-patch.zip` | You use OpenCode | Soft guide + Guard Core |
+
+The soft guide remains `instruction-guided`. Rebon and OpenCode patches are optional behavioral support for weaker models; a smart model can follow the runtime instructions without them. They add host-native mutation guarding without changing the core route. After extraction, follow the matching adapter guide: [Rebon](./host-adapters/rebon/README.md) or [OpenCode](./host-adapters/opencode/README.md).
+
+At Mode Gate, a supported host asks whether to use its adapter or the soft guide only. Start Rebon or OpenCode in that matching mode first: a live host hook cannot be switched on or off truthfully mid-session.
 
 ## Author
 

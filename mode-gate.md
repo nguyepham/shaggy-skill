@@ -2,13 +2,14 @@
 
 ## Contract
 
-Mode Gate alone owns provider and host evidence, suggested mode and host, human confirmation, governance, roadmap intent, capability validation, admission, and mode re-entry. Missing required evidence or capability returns `mode_not_admitted` before task work.
+Mode Gate alone owns provider and host evidence, suggested mode and host, host-adapter selection, human confirmation, governance, roadmap intent, capability validation, admission, and mode re-entry. Missing required evidence or capability returns `mode_not_admitted` before task work.
 
 ## Runtime references
 
 | When | Load | Return or use |
 |---|---|---|
-| The selected host is `rebon` and native capability must validate | [Rebon host adapter](successor-v0/modules/rebon-host-adapter.md) | Native capability confirmation for admission or `mode_not_admitted` |
+| The selected host is `rebon` and adapter selection must resolve | [Rebon host adapter](successor-v0/modules/rebon-host-adapter.md) | Exact Rebon capability or unavailable interception to Mode Gate |
+| The selected host is `opencode` and adapter selection must resolve | [OpenCode host adapter](successor-v0/modules/opencode-host-adapter.md) | Exact OpenCode capability or unavailable interception to Mode Gate |
 | A selected host's checkpoint interception capability must be classified | [Host Enforcement](successor-v0/modules/host-enforcement.md) | `checkpoint-capable` or unavailable interception; never a current operation or `enforced` claim |
 | Admission confirms an optimized mode | [Context Optimization](successor-v0/modules/context-optimization.md) | Context-fit operation after admission; it never decides the mode |
 | Admission completes | [Route](successor-v0/stage-0-route.md) | One family, overlay, or Route terminal from the admitted profile |
@@ -16,7 +17,7 @@ Mode Gate alone owns provider and host evidence, suggested mode and host, human 
 
 ## Inputs
 
-Read trusted provider and host capability metadata without asking a provider question. Do not use model names or installed commands as host identity.
+Read trusted provider and host capability metadata without asking a provider question. When `devskill_guard_status` is available, its exact Rebon or OpenCode adapter record is named-adapter host evidence. Do not use model names or installed commands as host identity.
 
 ## Evidence-based suggestion
 
@@ -26,16 +27,16 @@ Use trusted host or session metadata, then the named adapter configuration and d
 
 1. Trust runtime host/session metadata first.
 2. If a field remains unresolved, inspect only the named adapter's documented environment-variable names and host configuration or adapter probe. Do not enumerate arbitrary environment variables or infer locality from a model name, URL shape, or speed.
-3. Normalize evidence into provider kind, host kind, usable subagents, context capacity, workload request, and display support. Keep only the current sources and classifications; never expose secret contents.
+3. Normalize evidence into provider kind, host kind, usable subagents, context capacity, workload request, display support, and available host-adapter capability. Keep only the current sources and classifications; never expose secret contents.
 4. Compile at most one suggested mode and one suggested host with the supporting capability evidence. Conflicting evidence fails closed; do not merge profiles.
-5. Present one evidence-supported host and mode suggestion for human confirmation before mode selection. Governance never bypasses this confirmation.
+5. Present one evidence-supported host and mode suggestion for human confirmation before mode selection. After a supported host resolves, collect its host-adapter selection. Governance never bypasses these confirmations.
 6. Missing capability evidence, unresolved provider/session identity, or a conflicting suggestion returns the existing typed unresolved/admission failure. Never invent a suggestion or capability proof.
 
 Provider discovery authorizes DevSkill routing only; it does not grant project-runtime authority, approval, publication, or human decision power.
 
 ## Delegated profile
 
-A delegated task inherits its parent's admitted host, mode, and relevant task boundary. It does not rerun mode selection or prove nested subagent capacity. A changed host, mode, scope, or consumer returns to Mode Gate.
+A delegated task inherits its parent's admitted host, mode, host-adapter selection, and relevant task boundary. It does not rerun mode selection or prove nested subagent capacity. A changed host, mode, host-adapter selection, scope, or consumer returns to Mode Gate.
 
 ## Admission order
 
@@ -43,9 +44,10 @@ A delegated task inherits its parent's admitted host, mode, and relevant task bo
 2. Without a valid inherited profile, read provider metadata and capability evidence before asking for mode, host, or roadmap intent.
 3. Normalize the evidence and compile one suggested host and mode.
 4. Ask the human to confirm the suggestion. If the human declines or evidence is unresolved, ask mode first from the four choices, then host. Do not inspect provider evidence again.
-5. Resolve `roadmap_checkbox_update` after host selection and before implementation only when the task uses a roadmap checkbox. It records a later checklist update; it does not choose a review route or axis. Resolve governance only when the user names or accepts roadmap or session-goal continuation.
-6. At `admission_evaluated`, validate the selected mode against its applicable provider, host, subagent, planning-tool, structured-output, and handoff capabilities. Use the Host Enforcement reference only to classify available checkpoint interception.
-7. At `admission_returned`, announce the admitted host, provider, mode, subagent use, Context Optimization use, and roadmap intent once. Admission is capability only: it does not begin an operation or authorize a state change. Use the matching Runtime reference after admission.
+5. When the selected host is `rebon` or `opencode`, ask whether to use its host adapter or stay soft-guide-only. Use the matching Runtime reference to classify the live host state.
+6. Resolve `roadmap_checkbox_update` after host-adapter selection and before implementation only when the task uses a roadmap checkbox. It records a later checklist update; it does not choose a review route or axis. Resolve governance only when the user names or accepts roadmap or session-goal continuation.
+7. At `admission_evaluated`, validate the selected mode against its applicable provider, host, host-adapter selection, subagent, planning-tool, structured-output, and handoff capabilities.
+8. At `admission_returned`, announce the admitted host, provider, mode, host-adapter selection, subagent use, Context Optimization use, and roadmap intent once. Admission is capability only: it does not begin an operation or authorize a state change. Use the matching Runtime reference after admission.
 
 ## Admission representation
 
@@ -54,6 +56,7 @@ trusted evidence
   -> suggested host and mode
   -> confirmed suggestion | explicit mode choice
   -> host choice when required
+  -> host-adapter choice when supported
   -> roadmap or governance choice when relevant
   -> capability validation
   -> admitted | mode_not_admitted
@@ -103,8 +106,24 @@ On missing capability, return `mode_not_admitted`, identify the missing capabili
 | Evidence | Host |
 |---|---|
 | Trusted Rebon runtime metadata | `rebon` |
+| `devskill_guard_status` returns the exact Rebon adapter record | `rebon` |
+| `devskill_guard_status` returns the exact OpenCode adapter record | `opencode` |
+| Trusted OpenCode runtime metadata | `opencode` |
 | Trusted non-Rebon runtime metadata | `non-rebon` |
 | No trusted host identity | ask one host question; remain non-admitted until answered |
+
+## Host-adapter selection
+
+Only `rebon` and `opencode` have a host-adapter choice. Ask exactly:
+
+> Use the host adapter for this session, or use the soft guide only?
+
+| Choice | Choose when | Required live state | Result |
+|---|---|---|
+| Use host adapter | A weaker model needs host-side behavior enforcement | Matching adapter reports `mutation-guarded` | Retain `mutation-guarded` for Host Enforcement classification |
+| Use soft guide only | A smart model can follow the runtime instructions directly | Matching adapter is unavailable | Retain `instruction-guided` |
+
+An enabled hook cannot be disabled truthfully after the host has started. If the selected choice and live state differ, return `mode_not_admitted`: start the host through its guarded launcher for the first choice, or restart it through its no-guard launcher for the second. Re-enter Mode Gate after restart. Non-supported hosts have no host-adapter choice and remain `instruction-guided`.
 
 An installed command, provider, model, endpoint, or Agent capability does not establish host identity.
 
@@ -138,17 +157,18 @@ Announce the selected profile once — with the admitted profile when governance
 
 ## Admission result
 
-Admission requires resolved host, provider, mode, and capability fit. It also requires a roadmap answer only when the task uses a roadmap checkbox and a governance answer only for session or roadmap continuation. Plan selects any later closure unit from the final Grilling record and matching plan. `route_status=admitted` is required before repository work, but it is not a current operation, mutation authority, or generic activation marker.
+Admission requires resolved host, provider, mode, host-adapter selection when supported, and capability fit. It also requires a roadmap answer only when the task uses a roadmap checkbox and a governance answer only for session or roadmap continuation. Plan selects any later closure unit from the final Grilling record and matching plan. `route_status=admitted` is required before repository work, but it is not a current operation, mutation authority, or generic activation marker.
 
-When the host is Rebon, admission also requires the Rebon adapter to confirm the selected native tool path.
+When the host is Rebon, admission also requires the Rebon adapter to confirm the selected native tool path. Its Guard capability must match the selected host-adapter choice.
 
 ## Recovery
 
 - Missing provider/session identity or conflicting evidence returns the typed unresolved/admission failure; it cannot produce an admitted profile or invented suggestion.
 - Missing host identity returns one host question and remains non-admitted.
 - Missing mode capability returns `mode_not_admitted` without changing the selected value.
+- A supported-host adapter selection that differs from live host state returns `mode_not_admitted` and requires the matching guarded or no-guard host restart.
 - Conflicting or insufficient provider evidence returns the typed unresolved/admission failure; it never produces an invented suggestion or silently changes the selected mode.
-- Changed host, provider, mode, roadmap-checkbox intent, or governance profile invalidates the profile and reruns admission order.
+- Changed host, provider, mode, host-adapter selection, roadmap-checkbox intent, or governance profile invalidates the profile and reruns admission order.
 
 ## Completion
 
