@@ -4,7 +4,9 @@ Optional host integrations. Without an installed adapter, DevSkill remains `inst
 
 ## Release installation
 
-Extract `DevSkill-Unslop-2.3.0-soft-guide.zip` first. To add a guarded host, extract the shared `DevSkill-Unslop-2.3.0-guard-core-patch.zip`, then one host patch into that same skill folder.
+The repository already contains every adapter source. Use this folder directly after a full repository install.
+
+If you installed the small `DevSkill-Unslop-2.3.0-soft-guide.zip` instead, extract the shared `DevSkill-Unslop-2.3.0-guard-core-patch.zip`, then one host patch into that same skill folder.
 
 | Host | Patch | Next step |
 |---|---|---|

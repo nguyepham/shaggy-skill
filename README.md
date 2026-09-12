@@ -116,13 +116,13 @@ Humans still own meaning, authority, and permissions.
 
 ## Installation
 
-### Soft guide
+### Full package
 
 ```bash
-npx skills@latest add shaggyfeng/Dev-Skill-Unslop
+git clone https://github.com/shaggyfeng/Dev-Skill-Unslop.git
 ```
 
-Or install the repository as `dev-skill` inside your agent’s skill directory.
+The repository is the full installation: the DevSkill runtime plus Guard Core, Rebon, and OpenCode adapter source. Install the repository as `dev-skill` inside your agent’s skill directory, then follow an adapter guide only if you want host-side enforcement.
 
 For Codex:
 
@@ -132,18 +132,22 @@ For Codex:
 
 Then describe the task normally. The skill routes the work.
 
-### Optional host adapters
+### Small soft guide
 
-The source repository contains every adapter. Release assets let you install only what you use. Extract each selected archive into the same DevSkill folder.
+Download `DevSkill-Unslop-2.3.0-soft-guide.zip` from the release when you want only the small skill. It contains no host-adapter source or optional npm host code and works as `instruction-guided`.
+
+### Add an adapter to the soft guide
+
+Extract the shared Guard Core patch, then one matching host patch into that same DevSkill folder.
 
 | Release asset | Install when | Requires |
 |---|---|---|
-| `DevSkill-Unslop-2.3.0-soft-guide.zip` | Always | Nothing else |
+| `DevSkill-Unslop-2.3.0-soft-guide.zip` | You want the small skill only | Nothing else |
 | `DevSkill-Unslop-2.3.0-guard-core-patch.zip` | You want native host guarding | Soft guide |
 | `DevSkill-Unslop-2.3.0-rebon-adapter-patch.zip` | You use Rebon | Soft guide + Guard Core |
 | `DevSkill-Unslop-2.3.0-opencode-adapter-patch.zip` | You use OpenCode | Soft guide + Guard Core |
 
-The soft guide remains `instruction-guided`. Rebon and OpenCode patches are optional behavioral support for weaker models; a smart model can follow the runtime instructions without them. They add host-native mutation guarding without changing the core route. After extraction, follow the matching adapter guide: [Rebon](./host-adapters/rebon/README.md) or [OpenCode](./host-adapters/opencode/README.md).
+The soft guide remains `instruction-guided`. Rebon and OpenCode patches are optional behavioral support for weaker models; a smart model can follow the runtime instructions without them. They add host-native mutation guarding without changing the core route. Each host patch includes its setup guide.
 
 At Mode Gate, a supported host asks whether to use its adapter or the soft guide only. Start Rebon or OpenCode in that matching mode first: a live host hook cannot be switched on or off truthfully mid-session.
 
