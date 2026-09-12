@@ -116,12 +116,12 @@ On missing capability, return `mode_not_admitted`, identify the missing capabili
 
 Only `rebon` and `opencode` have a host-adapter choice. Ask exactly:
 
-> Use the host adapter for this session, or use the soft guide only?
+> Use code-level host enforcement for this session, or use the instruction-guided skill?
 
 | Choice | Choose when | Required live state | Result |
 |---|---|---|
-| Use host adapter | A weaker model needs host-side behavior enforcement | Matching adapter reports `mutation-guarded` | Retain `mutation-guarded` for Host Enforcement classification |
-| Use soft guide only | A smart model can follow the runtime instructions directly | Matching adapter is unavailable | Retain `instruction-guided` |
+| Use code-level enforcement | A weaker model needs host-side behavior enforcement | Matching adapter reports `mutation-guarded` | Retain `mutation-guarded` for Host Enforcement classification |
+| Use instruction-guided skill | A smart model can follow the runtime instructions directly | Matching adapter is unavailable | Retain `instruction-guided` |
 
 An enabled hook cannot be disabled truthfully after the host has started. If the selected choice and live state differ, return `mode_not_admitted`: start the host through its guarded launcher for the first choice, or restart it through its no-guard launcher for the second. Re-enter Mode Gate after restart. Non-supported hosts have no host-adapter choice and remain `instruction-guided`.
 
