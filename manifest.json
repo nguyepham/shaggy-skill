@@ -1,7 +1,7 @@
 {
   "schema": "devskill.clean-runtime-manifest.v1",
   "status": "active",
-  "version": "2.2.0",
+  "version": "2.2.3",
   "entrypoint": "SKILL.md",
   "runtime_files": [
     "SKILL.md",

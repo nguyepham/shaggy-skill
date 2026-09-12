@@ -1,4 +1,4 @@
-# DevSkill Unslop 2.2.0
+# DevSkill Unslop 2.2.3
 
 > AI can write code faster than you can regret the architecture.
 >

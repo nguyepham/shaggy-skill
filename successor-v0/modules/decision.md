@@ -17,7 +17,7 @@ Decision is the final semantic operation. A later semantic change returns to Rev
 - Candidate options and current facts when an option already exists.
 - Indirect intent: the stated thought, concern, preference, constraint, or goal, without invented project facts or candidate options.
 - Human Intent State: current observation, desired outcome, Value Gap, protected meaning, unresolved ambiguity, and any provisional hypothesis.
-- Applicable final Grilling decision record: intent baseline, exact accepted rules, supersession, and declared next consumer.
+- Applicable final Grilling decision record or final-closure candidate: scope and intent, exact accepted decisions, in-place supersession, final-design crosswalk, and roadmap disposition.
 - Relevant Review findings.
 - A compact Common Sense reference when one matched; its absence changes nothing.
 
@@ -71,9 +71,10 @@ Decision is the final semantic operation. A later semantic change returns to Rev
 
 4. Obtain Review findings only when a frozen candidate needs them. An indirect intent without a candidate does not manufacture a review surface.
 5. For every Review finding or proposed correction governed by a final Grilling decision record, compare it with that record's exact accepted rules and intent baseline. Invalidate it for the current candidate when it conflicts with an accepted rule or its correction does not reduce the stated Value Gap. Preserve the finding as evidence; invalidation prevents an action request. Return every other finding or correction as actionable to its owner.
-6. Immediately before return, Humour tests each candidate after its selected safeguards, verification, fallback, and recovery are known. Use the Humour test shape for each candidate.
-7. Invalidate a candidate only within a condition zone that increases the Value Gap. A candidate not invalidated is not thereby valid, approved, or preferred. Humour neither scores candidates nor vetoes generic risk.
-8. At `decision_returned`, compare surviving candidates by their ability to close the stated Value Gap. Recommend only a clearly dominant candidate. Use the Grilling reference when a human-valued priority remains non-comparable.
+6. For one final-closure candidate, inspect the complete crosswalk. A mechanically mapped item remains mechanical; Decision verifies only that `resolved` has an exact accepted-decision source and `not needed` is traceable solely to accepted scope and supplied inputs. Every applicable unmapped item or intent inference returns to Grilling as one bounded human question. Do not invent an accepted decision, roadmap disposition, readiness answer, or replacement status.
+7. Immediately before return, Humour tests each candidate after its selected safeguards, verification, fallback, and recovery are known. Use the Humour test shape for each candidate.
+8. Invalidate a candidate only within a condition zone that increases the Value Gap. A candidate not invalidated is not thereby valid, approved, or preferred. Humour neither scores candidates nor vetoes generic risk.
+9. At `decision_returned`, compare surviving candidates by their ability to close the stated Value Gap. Recommend only a clearly dominant candidate. Use the Grilling reference when a human-valued priority remains non-comparable.
 
 ## Bounded closure
 

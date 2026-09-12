@@ -26,7 +26,7 @@ Plan owns lifecycle order, module calls and returns, and terminals. It does not 
 | Terms or source facts are missing | [Domain Modeling](modules/domain-modeling.md) or [Research](modules/research.md) | Resolved input or upstream return to Plan |
 | Planning needs bounded human-experience evidence | [Prototype](modules/prototype.md) | Evidence to the current Plan operation |
 | Human-owned planning meaning, priority, or authority is unresolved | [Grilling](modules/grilling.md) | Accepted rule or next human question to Plan |
-| A final Grilling decision record governs planning | [Grilling](modules/grilling.md) | Exact intent baseline and accepted rules bind the plan outcome, specification, tickets, and closure-unit selection |
+| A final Grilling decision record governs planning | [Grilling](modules/grilling.md) | Exact scope and intent, accepted decisions, crosswalk, and roadmap disposition bind the plan outcome, specification, tickets, and closure-unit selection |
 | A plan candidate needs findings | [Review](modules/review.md) | Findings to the current Plan operation |
 | A frozen plan candidate has a semantic choice | [Review](modules/review.md), then [Decision](modules/decision.md) | Findings and semantic disposition to the current Plan operation |
 
@@ -36,6 +36,8 @@ Plan owns lifecycle order, module calls and returns, and terminals. It does not 
 |---|---|---|
 | Accepted Design result and current planning obligation are present | `plan_operation` | The matching planning module operation |
 | A module returns a material plan result | `plan_closure` | Determined Work handoff, declared return, or the existing gap call |
+
+Read a final Grilling record's roadmap disposition before creating or changing a roadmap. `update current roadmap` changes only its record-declared relevant current slice or phase in place, preserving all other roadmap scope. `create new roadmap` begins a new roadmap only after Grilling's combined readiness result. If the disposition is absent, return to Grilling for one bounded choice; Plan does not infer it.
 
 When an accepted Design result or final Grilling decision record covers a complete planned outcome, declare its smallest closure unit from that scope and the planned tickets: one complete implementation, one phase, the roadmap, or a merge. An unresolved unit choice uses Review then Decision. A roadmap unit closes every planned phase before the full roadmap. A Work slice contributes to a closure unit; a checkbox does not create one.
 

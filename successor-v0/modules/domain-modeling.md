@@ -52,7 +52,7 @@ An ADR lives at `docs/adr/{NNNN}-{slug}.md`, uses the next sequential number, an
 5. Test boundaries with concrete edge conditions. Preserve code, document, and meaning conflicts for human resolution.
 6. Use the Review and Decision reference for a semantic term, rule, ownership, or ADR choice; otherwise return the candidate at `candidate_returned`.
 7. At `exact_write`, after exact human acceptance, write only the accepted canonical terms to the applicable glossary. Create a short ADR only when the trade-off is hard to reverse, surprising without context, and real.
-8. For a completed Grilling session, use `exact_write` to write its final decision record without changing its scoped questions, intent baseline, accepted rules, supersession, or next consumers, then return it at `record_returned`.
+8. For a completed Grilling session, use `exact_write` to write its final decision record without changing its scope and intent, accepted decisions, in-place supersession, final-design crosswalk, roadmap disposition, or declared next consumers. A current-roadmap update amends only its affected decision entries and crosswalk rows in place, preserving all others; do not create a history copy. Return it at `record_returned`.
 
 ## Returns
 
