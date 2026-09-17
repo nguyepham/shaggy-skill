@@ -13,6 +13,8 @@ Run for one admitted Work slice with accepted scope, dependencies, write ownersh
 | Accepted seam | Public behavior location already agreed by Design or Plan where callers and tests observe the same result |
 | Behavior test | A test that drives the accepted seam and asserts the observable outcome independently of implementation |
 | Verification | Focused static and behavioral checks that prove the slice objective and stated failure behavior |
+| Equivalence scope | The observable behavior a preservation rewrite must match, plus permitted differences |
+| Differential comparator | A temporary focused old/new comparison inside an Equivalence scope; evidence, not an oracle |
 | Consumer | Integration or the next admitted slice after review and verification pass |
 
 A TDD cycle is one behavior test that fails for the expected reason, the minimum implementation that changes that behavior, and the same focused test passing. It is not an all-tests-first or layer-by-layer batch.
@@ -40,9 +42,11 @@ A TDD cycle is one behavior test that fails for the expected reason, the minimum
 1. Enter `candidate_build`. Read only the material needed by the slice. Use the matching Context Optimization or Mode Gate reference when context fit requires it.
 2. Use the TDD cycle when an accepted seam can assert the behavior.
 3. Derive expected values independently. Test public behavior; mock only external effects or nondeterministic boundaries. Do not couple tests to private collaborators or refactor-insensitive behavior.
-4. When no valid red-first seam exists, state why and use the slice's declared verification path. Do not invent a seam mid-slice.
-5. Read back changed artifacts and run focused static and behavioral checks.
-6. Return the candidate and focused checks at `candidate_submitted` to Work. Work dispatches and consumes separate Standards and Specification findings. When Work returns a same-meaning finding, use `correction_build`, rerun affected checks, and resubmit. When a correction changes meaning, scope, authority, or adds a safeguard, fallback, verification, recovery, or action beyond the smallest owning change, return that semantic correction candidate to Work; Work uses Review then Decision before any expanded write.
+4. For a preservation rewrite whose independent tests do not cover the Equivalence scope, use a temporary Differential comparator only for behavior the old path is trusted to represent. Normalize only declared permitted differences. A comparison result is evidence, not correctness; remove the comparator after focused public validation passes.
+5. If current validation cannot separate a mismatch from a known failure, intended difference, or nondeterminism, return the validation gap to Work. Work routes the smallest relevant validation repair to Plan before any preservation claim.
+6. When no valid red-first seam exists, state why and use the slice's declared verification path. Do not invent a seam mid-slice.
+7. Read back changed artifacts and run focused static and behavioral checks.
+8. Return the candidate and focused checks at `candidate_submitted` to Work. Work dispatches and consumes separate Standards and Specification findings. When Work returns a same-meaning finding, use `correction_build`, rerun affected checks, and resubmit. When a correction changes meaning, scope, authority, or adds a safeguard, fallback, verification, recovery, or action beyond the smallest owning change, return that semantic correction candidate to Work; Work uses Review then Decision before any expanded write.
 
 ## Returns
 
@@ -50,5 +54,6 @@ A TDD cycle is one behavior test that fails for the expected reason, the minimum
 |---|---|
 | Candidate and focused checks | [Work](../work.md) review barrier |
 | Unexpected failure with bounded symptom | [Diagnosing Bugs](diagnosing-bugs.md) |
+| Validation gap for a preservation rewrite | [Work](../work.md) for Plan return |
 | Missing seam, changed meaning, or invalid scope | [Plan](../plan.md) or [Design](../design.md) |
 | Semantic implementation choice or expanded correction | [Work](../work.md) for Review then Decision |

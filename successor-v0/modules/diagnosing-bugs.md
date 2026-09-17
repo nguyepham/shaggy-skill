@@ -16,8 +16,9 @@ Run for a bounded symptom, failed verification, regression, performance failure,
 | Hypothesis | A distinct falsifiable cause with a prediction: if the cause is true, changing one named variable changes the result |
 | Probe | One observation or intervention that tests one hypothesis prediction |
 | Regression seam | The public behavior location where the real bug pattern can become a lasting test |
+| Performance context | Whether a measurement is a proxy or target workload, with its input scale, call frequency, and cost |
 
-Return the reproduction, minimized case, hypotheses and predictions, probes, supported cause, bounded fix scope, regression seam, and any missing environment or permission. Diagnosis does not choose or apply the fix.
+Return the reproduction, minimized case, hypotheses and predictions, probes, supported cause, bounded fix scope, regression seam, any applicable Performance context or validation gap, and any missing environment or permission. Diagnosis does not choose or apply the fix.
 
 ## Runtime references
 
@@ -41,15 +42,16 @@ Return the reproduction, minimized case, hypotheses and predictions, probes, sup
 3. Minimize the input while preserving the failure.
 4. For a Soft symptom, enumerate its observable Preconditions. Give each one independent Probe and classify it as working, broken, or unknown before narrowing the hypothesis set.
 5. Form three to five distinguishable falsifiable hypotheses, each with a prediction. Test one variable at a time; prefer debugger inspection before logs and give temporary logs unique tags.
-6. Establish a measurement baseline before performance changes.
-7. Identify the smallest cause supported by discriminating evidence. Define a regression seam and test before the fix; if no seam exists, return the architecture finding.
-8. Rerun the reproduction, remove temporary instrumentation, remove throwaways, and return the confirmed cause, bounded fix scope, and regression seam at `diagnosis_returned`.
+6. Establish a measurement baseline before performance changes. Record its Performance context; do not treat a proxy as target evidence without the expected target workload.
+7. Identify the smallest cause supported by discriminating evidence. If current validation cannot distinguish a cause from a known failure, intended difference, or nondeterminism, return a validation gap. Define a regression seam and test before the fix; if no seam exists, return the architecture finding.
+8. Rerun the reproduction, remove temporary instrumentation, remove throwaways, and return the confirmed cause, bounded fix scope, regression seam, or validation gap at `diagnosis_returned`.
 
 ## Returns
 
 | Result | Consumer |
 |---|---|
 | Supported cause and bounded fix scope | [Work](../work.md) |
+| Validation gap | [Work](../work.md) for Plan return |
 | Missing reproducing environment or permission | Human or calling family |
 | Missing regression seam | [Plan](../plan.md) or [Codebase Design](codebase-design.md) |
 | Competing semantic fix directions | [Review](review.md), then [Decision](decision.md) |

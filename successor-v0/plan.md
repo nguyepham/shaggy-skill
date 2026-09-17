@@ -65,7 +65,9 @@ At `plan_operation`, size only the named scope, active roadmap, final Grilling r
 
 Create one decision-to-outcome map before roadmap creation and ticket compilation. Map every accepted decision to `current`, `future`, or `no Work`. Use Review then Decision only when the mapping is semantic. Research and Prototype return exact readiness evidence; they never promote a future outcome. At `plan_closure`, return the map to the declared roadmap, specification, ticket, Work, or upstream consumer.
 
-Future work re-enters Plan only from its linked dependency, exact Research or Prototype evidence change, changed user goal, priority, or constraint, named task or handoff resumption, or Plan-declared operating milestone or shipment closure. Read only linked items. At an operating milestone or shipment closure, each linked provisional resolution becomes current implementation, an already-covered exact accepted scope result, or a Grilling scope amendment; otherwise return to Plan. Passing current-slice checks never closes remaining final behavior silently.
+A validation gap needed to interpret an affected change is `current` before that change; it does not promote unrelated validation repair.
+
+Future work re-enters Plan only from its linked dependency, exact Research or Prototype evidence change, changed user goal, priority, or constraint, observed workload scale, target platform condition, measured performance budget breach, named task or handoff resumption, or Plan-declared operating milestone or shipment closure. Read only linked items. At an operating milestone or shipment closure, each linked provisional resolution becomes current implementation, an already-covered exact accepted scope result, or a Grilling scope amendment; otherwise return to Plan. Passing current-slice checks never closes remaining final behavior silently.
 
 Under `mutation-guarded` enforcement, only an exact roadmap, ticket, or decision-record state-changing action uses the matching Plan binding and exact target. Reads, source sizing, and mapping remain unguarded. This adds no Plan-specific Guard protocol.
 

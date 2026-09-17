@@ -21,7 +21,7 @@ Run for a new interface, seam, or architecture candidate in Plan. A user naming 
 
 ## Candidate structure
 
-State the required behavior, chosen module, interface, hidden implementation responsibility, dependency classification, seam and adapters when justified, observable test surface, constraints, and trade-offs. A Design-It-Twice comparison gives each independent candidate the same structure before Review and Decision compare depth, locality, and seam placement.
+State the required behavior, chosen module, interface, hidden implementation responsibility, dependency classification, seam and adapters when justified, observable test surface, constraints, and trade-offs. For a supported performance concern, also state the dominant query, input scale, and invalidation event. A Design-It-Twice comparison gives each independent candidate the same structure before Review and Decision compare depth, locality, and seam placement.
 
 ## Runtime references
 
@@ -42,7 +42,7 @@ State the required behavior, chosen module, interface, hidden implementation res
 
 ## Operation
 
-1. At `architecture_started`, map required behavior, callers, dependencies, state, effects, tests, and accepted constraints.
+1. At `architecture_started`, map required behavior, callers, dependencies, state, effects, tests, and accepted constraints. For a supported performance concern, map the dominant query, input scale, and invalidation event.
 2. Classify each dependency path:
 
 | Path | Rule |
@@ -52,7 +52,7 @@ State the required behavior, chosen module, interface, hidden implementation res
 | Remote but owned | Use a port and production/test transport adapters. |
 | True external | Use a port, production adapter, and test mock. |
 
-3. Assign cohesive behavior and state ownership. Define small, deep interfaces with operations, inputs, outputs, invariants, ordering, errors, configuration, and performance constraints.
+3. Assign cohesive behavior and state ownership. Define small, deep interfaces with operations, inputs, outputs, invariants, ordering, errors, configuration, and performance constraints. For a supported performance concern, choose the representation from the mapped workload and invalidation event; do not add abstract optimization.
 4. Add a seam only where behavior must vary. Prefer observable outcomes over hidden effects. Use the deletion test: a useful module redistributes meaningful complexity when removed.
 5. For explicit Design-It-Twice work, create independent candidates with distinct constraints, then use the Review and Decision reference for comparison and return at `architecture_returned`.
 

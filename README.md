@@ -1,4 +1,4 @@
-# DevSkill Unslop 2.4.2
+# DevSkill Unslop 2.4.3
 
 > AI can write code faster than you can regret the architecture.
 >
@@ -136,7 +136,7 @@ Then describe the task normally. The skill routes the work.
 
 ### Full instruction-guided skill
 
-Download `DevSkill-Unslop-2.4.2-soft-guide.zip` when you want the complete DevSkill instruction set without host-enforcement code. It trusts the agent model to follow DevSkill directly; it contains no host-adapter source or optional npm host code and operates as `instruction-guided`.
+Download `DevSkill-Unslop-2.4.3-soft-guide.zip` when you want the complete DevSkill instruction set without host-enforcement code. It trusts the agent model to follow DevSkill directly; it contains no host-adapter source or optional npm host code and operates as `instruction-guided`.
 
 ### Add host enforcement
 
@@ -144,9 +144,9 @@ Start with the instruction-guided skill, then extract the shared Guard Core patc
 
 | Release asset | Install when | Requires |
 |---|---|---|
-| `DevSkill-Unslop-2.4.2-soft-guide.zip` | You trust the model to follow DevSkill | Nothing else |
-| `DevSkill-Unslop-2.4.2-guard-core-patch.zip` | You need code-level host enforcement | Instruction-guided skill |
-| `DevSkill-Unslop-2.4.2-rebon-adapter-patch.zip` | You use Rebon with enforcement | Instruction-guided skill + Guard Core |
+| `DevSkill-Unslop-2.4.3-soft-guide.zip` | You trust the model to follow DevSkill | Nothing else |
+| `DevSkill-Unslop-2.4.3-guard-core-patch.zip` | You need code-level host enforcement | Instruction-guided skill |
+| `DevSkill-Unslop-2.4.3-rebon-adapter-patch.zip` | You use Rebon with enforcement | Instruction-guided skill + Guard Core |
 
 The instruction-guided skill is complete. The Rebon patch adds code-level behavior enforcement for weaker models; a smart model can follow the runtime instructions without it. The patch includes its setup guide.
 

@@ -13,7 +13,7 @@ approved Work slice
 
 bounded symptom
   -> diagnosis
-  -> implementation | declared gap return | Review -> Decision | Grilling
+  -> implementation | validation-gap Plan return | declared gap return | Review -> Decision | Grilling
 ```
 
 Work owns admission, one-slice order, module calls and returns, the per-slice review barrier, integration, continuation, reopen, and terminals. It does not own implementation, diagnosis, Research, Handoff, Review, or Decision procedures.
@@ -23,7 +23,8 @@ Work owns admission, one-slice order, module calls and returns, the per-slice re
 | When | Load | Return to |
 |---|---|---|
 | An authorized implementation slice is ready | [Implementation and TDD](modules/implementation-and-tdd.md) | Candidate or upstream return to Work |
-| A bounded symptom exists | [Diagnosing Bugs](modules/diagnosing-bugs.md) | Supported cause, declared gap, or competing fix path to Work |
+| A bounded symptom exists | [Diagnosing Bugs](modules/diagnosing-bugs.md) | Supported cause, validation gap, declared gap, or competing fix path to Work |
+| An affected change has a validation gap | [Plan](plan.md) | Smallest relevant validation repair before that change continues |
 | A controlling fact is missing | [Research](modules/research.md) | Evidence or Research gap to Work |
 | Work needs bounded human-experience evidence | [Prototype](modules/prototype.md) | Evidence to the owning Work slice |
 | A real session or environment boundary exists | [Handoff](modules/handoff-and-boundaries.md) | Next consumer to Work |
@@ -43,6 +44,7 @@ Complete review, correction, verification, and integration for one slice before 
 |---|---|---|
 | An authorized slice and its prerequisites are present | `slice_entered` | Implementation or diagnosis for that one slice |
 | Diagnosis returns a supported cause, declared gap, or competing fix path | `diagnosis_returned` | Determined implementation, declared fact or environment return, Review then Decision, or Grilling |
+| Diagnosis or Implementation returns a validation gap | `validation_gap_returned` | Plan validation repair before the affected change continues |
 | A candidate returns from the owning module | `review_barrier` | Work dispatches and consumes the required Review findings |
 | Findings remain | `correction_required` | Same-meaning correction and repeat affected review and verification, or upstream semantic return |
 | Findings clear and declared verification passes | `slice_integrated` | Integration, Common Sense eligibility, declared closure readiness, or the next non-dependent terminal |
@@ -52,12 +54,13 @@ Complete review, correction, verification, and integration for one slice before 
 
 1. Enter one authorized slice at `slice_entered`; do not begin a dependent slice.
 2. At `diagnosis_returned`, a supported cause with an accepted bounded fix scope enters Implementation. A declared fact or environment gap follows its declared return. A frozen competing fix candidate uses Review then Decision. Human-owned meaning, priority, or authority uses Grilling.
-3. Receive the candidate at `review_barrier` and dispatch Review. The implementer does not appoint, dispose of, or replace this barrier.
-4. At `correction_required`, keep a same-meaning correction in the slice and repeat affected findings and verification. Return changed meaning, scope, or authority through Review then Decision and its declared Plan or Design route.
-5. Enter `slice_integrated` only when findings clear and the slice's declared verification passes. A remaining finding blocks integration, closure-unit review, and dependent-slice advance.
-6. When every contributing slice of a Plan-declared closure unit is integrated, enter `closure_ready` and use Review's three-axis closure loop before its declared consumer.
-7. When an integrated result satisfies its linked provisional reconsideration event, return only that event evidence to Plan. Work does not promote future work or close deferred remaining behavior.
-8. Apply bounded closure to the integrated result: use the declared terminal when determined; otherwise use the existing Research, Prototype, Grilling, Review, or Decision call.
+3. At `validation_gap_returned`, return only the smallest relevant validation repair to Plan before the affected change continues.
+4. Receive the candidate at `review_barrier` and dispatch Review. The implementer does not appoint, dispose of, or replace this barrier.
+5. At `correction_required`, keep a same-meaning correction in the slice and repeat affected findings and verification. Return changed meaning, scope, or authority through Review then Decision and its declared Plan or Design route.
+6. Enter `slice_integrated` only when findings clear and the slice's declared verification passes. A remaining finding blocks integration, closure-unit review, and dependent-slice advance.
+7. When every contributing slice of a Plan-declared closure unit is integrated, enter `closure_ready` and use Review's three-axis closure loop before its declared consumer.
+8. When an integrated result satisfies its linked provisional reconsideration event, return only that event evidence to Plan. Work does not promote future work or close deferred remaining behavior.
+9. Apply bounded closure to the integrated result: use the declared terminal when determined; otherwise use the existing Research, Prototype, Grilling, Review, or Decision call.
 
 ## Terminals
 

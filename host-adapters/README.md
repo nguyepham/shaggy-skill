@@ -6,11 +6,11 @@ Optional host integrations. Without an installed adapter, DevSkill remains `inst
 
 The repository already contains every adapter source. Use this folder directly after a full repository install.
 
-If you installed `DevSkill-Unslop-2.4.2-soft-guide.zip` instead, you have the full instruction-guided skill: it trusts the model to follow DevSkill without host-enforcement code. Add the shared `DevSkill-Unslop-2.4.2-guard-core-patch.zip`, then one host patch into that same skill folder only when code-level enforcement is needed.
+If you installed `DevSkill-Unslop-2.4.3-soft-guide.zip` instead, you have the full instruction-guided skill: it trusts the model to follow DevSkill without host-enforcement code. Add the shared `DevSkill-Unslop-2.4.3-guard-core-patch.zip`, then one host patch into that same skill folder only when code-level enforcement is needed.
 
 | Host | Patch | Next step |
 |---|---|---|
-| Rebon | `DevSkill-Unslop-2.4.2-rebon-adapter-patch.zip` | [Rebon setup](./rebon/README.md) |
+| Rebon | `DevSkill-Unslop-2.4.3-rebon-adapter-patch.zip` | [Rebon setup](./rebon/README.md) |
 
 The Core patch is shared. Do not install a host patch without it.
 

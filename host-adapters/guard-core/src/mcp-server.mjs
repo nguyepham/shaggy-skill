@@ -376,7 +376,7 @@ async function call(tool, args) {
 }
 
 const server = new Server(
-  { name: "devskill-guard", version: "2.4.2" },
+  { name: "devskill-guard", version: "2.4.3" },
   { capabilities: { tools: {} } },
 );
 
