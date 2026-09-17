@@ -1,7 +1,14 @@
+import { spawn } from "node:child_process";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const guardUrl = (process.env.DEVSKILL_GUARD_URL ?? "http://127.0.0.1:7636").replace(/\/$/, "");
 const sessionId = process.env.DEVSKILL_GUARD_SESSION ?? "rebon-default";
+const guardEnabled = !new Set(["0", "false", "off", "disabled"]).has(
+  String(process.env.DEVSKILL_GUARD_ENABLED ?? "1").trim().toLowerCase(),
+);
+const adapterDir = path.dirname(fileURLToPath(import.meta.url));
+const coreServer = path.resolve(adapterDir, "..", "guard-core", "src", "http-server.mjs");
 const options = process.argv.slice(2);
 const toolIndex = options.indexOf("--tool");
 const tool = toolIndex >= 0 ? options[toolIndex + 1] : "";
@@ -16,6 +23,10 @@ const readOnlyShell = [
 
 function message(error) {
   return error instanceof Error ? error.message : String(error);
+}
+
+function sleep(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
 function readInput() {
@@ -72,6 +83,47 @@ function targetFor(toolName, input) {
   );
 }
 
+async function currentStatus() {
+  try {
+    const response = await fetch(`${guardUrl}/v1/status?session_id=${encodeURIComponent(sessionId)}`, {
+      signal: AbortSignal.timeout(1_000),
+    });
+    if (!response.ok) return null;
+    return await response.json();
+  } catch {
+    return null;
+  }
+}
+
+async function coreRunning() {
+  try {
+    const response = await fetch(`${guardUrl}/health`, { signal: AbortSignal.timeout(1_000) });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
+async function ensureCore() {
+  if (!guardEnabled || await coreRunning()) return guardEnabled;
+  const port = new URL(guardUrl).port || "7636";
+  const child = spawn(process.execPath, [coreServer], {
+    detached: true,
+    stdio: "ignore",
+    env: { ...process.env, DEVSKILL_GUARD_PORT: port },
+  });
+  child.unref();
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    await sleep(100);
+    if (await coreRunning()) return true;
+  }
+  return false;
+}
+
+function matchingAdapter(status) {
+  return status?.adapter?.name === "rebon" && status.adapter.capability === "mutation-guarded";
+}
+
 async function request(pathname, body) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 4_000);
@@ -93,15 +145,25 @@ async function request(pathname, body) {
 }
 
 async function lifecycle() {
+  if (!guardEnabled) return;
   if (event === "session-start") {
-    await request("/v1/adapter/announce", {
+    if (!await ensureCore()) throw new Error("DevSkill Guard Core did not become available.");
+    if (await currentStatus()) {
+      await request("/v1/reset", { session_id: sessionId });
+    }
+    await request("/v1/adapter/register", {
       session_id: sessionId,
       name: "rebon",
       capability: "mutation-guarded",
     });
   }
   if (event === "session-end") {
-    await request("/v1/reset", { session_id: sessionId });
+    const status = await currentStatus();
+    if (!status) return;
+    const result = await request("/v1/release", { session_id: sessionId });
+    if (result.remaining_sessions === 0) {
+      await fetch(`${guardUrl}/v1/shutdown`, { method: "POST", signal: AbortSignal.timeout(1_000) }).catch(() => undefined);
+    }
   }
 }
 
@@ -116,10 +178,12 @@ async function main() {
     return;
   }
 
+  if (!guardEnabled) return;
   if (!tool) throw new Error("missing configured Rebon tool identity");
   const input = await readInput();
   const target = targetFor(tool, input);
   if (!target) return;
+  if (!matchingAdapter(await currentStatus())) return;
   await request("/v1/authorize", { session_id: sessionId, action: "mutation", target });
 }
 

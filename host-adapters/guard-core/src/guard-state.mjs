@@ -5,7 +5,6 @@ const MODES = new Set([
   "sequential-optimized",
 ]);
 const ADAPTER_CAPABILITIES = new Map([
-  ["opencode", new Set(["mutation-guarded"])],
   ["rebon", new Set(["mutation-guarded"])],
 ]);
 
@@ -63,6 +62,7 @@ function newSession() {
     profile: null,
     binding: null,
     adapter: null,
+    hook: null,
     revision: 0,
   };
 }
@@ -81,6 +81,12 @@ export class Guard {
     }
 
     const session = this.#sessions.get(sessionId) ?? newSession();
+    if (!session.adapter) {
+      return failure("adapter_missing", "Enable a matching native adapter before admitting a guarded session.");
+    }
+    if (host !== session.adapter.name) {
+      return failure("host_adapter_mismatch", "The admitted host must match the enabled native adapter exactly.");
+    }
     session.profile = { provider, host, mode, route_status: "admitted" };
     session.binding = null;
     session.revision += 1;
@@ -97,7 +103,25 @@ export class Guard {
     }
 
     const session = this.#sessions.get(sessionId) ?? newSession();
+    if (session.hook?.name !== name || session.hook?.capability !== capability) {
+      return failure("hook_unavailable", "The matching native host hook is not registered for this session.");
+    }
     session.adapter = { name, capability };
+    session.revision += 1;
+    this.#sessions.set(sessionId, session);
+    return { ok: true, session_id: sessionId, ...copy(session) };
+  }
+
+  registerHook(input) {
+    const sessionId = text(input.session_id);
+    const name = text(input.name);
+    const capability = text(input.capability);
+    if (!sessionId || !ADAPTER_CAPABILITIES.get(name)?.has(capability)) {
+      return failure("invalid_input", "session_id and a supported hook capability are required.");
+    }
+
+    const session = this.#sessions.get(sessionId) ?? newSession();
+    session.hook = { name, capability };
     session.revision += 1;
     this.#sessions.set(sessionId, session);
     return { ok: true, session_id: sessionId, ...copy(session) };
@@ -177,5 +201,28 @@ export class Guard {
     const sessionId = text(input.session_id);
     if (!this.#sessions.delete(sessionId)) return failure("session_missing", "No session exists for session_id.");
     return { ok: true, session_id: sessionId, reset: true };
+  }
+
+  deactivate(input) {
+    const sessionId = text(input.session_id);
+    const session = this.#sessions.get(sessionId);
+    if (!session) return failure("session_missing", "No session exists for session_id.");
+    session.profile = null;
+    session.binding = null;
+    session.adapter = null;
+    session.revision += 1;
+    return { ok: true, session_id: sessionId, ...copy(session) };
+  }
+
+  release(input) {
+    const sessionId = text(input.session_id);
+    if (!sessionId) return failure("invalid_input", "session_id is required.");
+    const released = this.#sessions.delete(sessionId);
+    return {
+      ok: true,
+      session_id: sessionId,
+      released,
+      remaining_sessions: this.#sessions.size,
+    };
   }
 }

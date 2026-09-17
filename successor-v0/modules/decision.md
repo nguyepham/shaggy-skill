@@ -18,6 +18,7 @@ Decision is the final semantic operation. A later semantic change returns to Rev
 - Indirect intent: the stated thought, concern, preference, constraint, or goal, without invented project facts or candidate options.
 - Human Intent State: current observation, desired outcome, Value Gap, protected meaning, unresolved ambiguity, and any provisional hypothesis.
 - Applicable final Grilling decision record or final-closure candidate: scope and intent, exact accepted decisions, in-place supersession, final-design crosswalk, and roadmap disposition.
+- Plan's proposed decision-to-outcome map when current Work, future Work, or no Work is semantically unresolved.
 - Relevant Review findings.
 - A compact Common Sense reference when one matched; its absence changes nothing.
 
@@ -36,6 +37,7 @@ Decision is the final semantic operation. A later semantic change returns to Rev
 |---|---|---|
 | A candidate option needs findings | [Review](review.md) | Finding shape facts that Decision may consume without inventing evidence |
 | A Review finding or correction is governed by a final Grilling decision record | [Grilling](grilling.md) | Intent baseline and accepted rules for its actionability check |
+| Plan sends a semantically unresolved decision-to-outcome candidate | [Plan](../plan.md) | `current`, `future`, or `no Work` disposition to Plan; Plan stores and consumes it |
 | A current operation has a matched pattern | [Common Sense](common-sense.md) | Compact matched-pattern reference; absence changes nothing |
 | Protected meaning changes or human priority remains unresolved | [Grilling](grilling.md) | Next bounded human question or accepted rule |
 | A Decision result needs presentation | [Write](write.md) | Rendered result that does not change the disposition |
@@ -75,6 +77,7 @@ Decision is the final semantic operation. A later semantic change returns to Rev
 7. Immediately before return, Humour tests each candidate after its selected safeguards, verification, fallback, and recovery are known. Use the Humour test shape for each candidate.
 8. Invalidate a candidate only within a condition zone that increases the Value Gap. A candidate not invalidated is not thereby valid, approved, or preferred. Humour neither scores candidates nor vetoes generic risk.
 9. At `decision_returned`, compare surviving candidates by their ability to close the stated Value Gap. Recommend only a clearly dominant candidate. Use the Grilling reference when a human-valued priority remains non-comparable.
+10. For a Plan decision-to-outcome map, classify only the supplied candidate outcome as `current`, `future`, or `no Work`. `future` requires a useful but non-blocking outcome, its exact reconsideration event, evidence pointer, and final consumer. Decision does not store the map, promote a future item, or select a Route consumer.
 
 ## Bounded closure
 
@@ -104,6 +107,7 @@ When no semantic fork remains, the caller follows its declared consumer mechanic
 | Invalidated option with failure scenario, component, and condition zone | [Grilling](grilling.md) |
 | Unresolved human meaning or priority | [Grilling](grilling.md) |
 | Clear recommendation | [Write](write.md) for presentation or admitted actor for execution |
+| Plan outcome disposition | [Plan](../plan.md) for map construction |
 
 ## Limits
 

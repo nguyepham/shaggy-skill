@@ -29,6 +29,7 @@ Work owns admission, one-slice order, module calls and returns, the per-slice re
 | A real session or environment boundary exists | [Handoff](modules/handoff-and-boundaries.md) | Next consumer to Work |
 | A candidate needs findings | [Review](modules/review.md) | Findings to the owning Work slice |
 | All slices of a Plan-declared closure unit are integrated | [Review](modules/review.md), then [Decision](modules/decision.md) | Three-axis closure findings and disposition to the declared consumer |
+| An integrated current slice satisfies a linked provisional reconsideration event | [Plan](plan.md) | Linked event evidence to Plan; Plan decides current, future, or no Work disposition |
 | A frozen implementation or diagnosis-fix candidate is semantic | [Review](modules/review.md), then [Decision](modules/decision.md) | Findings and semantic disposition to the owning Work slice |
 | Human-owned Work meaning, priority, or authority remains unresolved | [Grilling](modules/grilling.md) | Accepted rule or next human question to Work |
 | A completed outcome has a reusable pattern | [Common Sense](modules/common-sense.md), after Review and Decision | Accepted table update or no change to the project table |
@@ -55,7 +56,8 @@ Complete review, correction, verification, and integration for one slice before 
 4. At `correction_required`, keep a same-meaning correction in the slice and repeat affected findings and verification. Return changed meaning, scope, or authority through Review then Decision and its declared Plan or Design route.
 5. Enter `slice_integrated` only when findings clear and the slice's declared verification passes. A remaining finding blocks integration, closure-unit review, and dependent-slice advance.
 6. When every contributing slice of a Plan-declared closure unit is integrated, enter `closure_ready` and use Review's three-axis closure loop before its declared consumer.
-7. Apply bounded closure to the integrated result: use the declared terminal when determined; otherwise use the existing Research, Prototype, Grilling, Review, or Decision call.
+7. When an integrated result satisfies its linked provisional reconsideration event, return only that event evidence to Plan. Work does not promote future work or close deferred remaining behavior.
+8. Apply bounded closure to the integrated result: use the declared terminal when determined; otherwise use the existing Research, Prototype, Grilling, Review, or Decision call.
 
 ## Terminals
 

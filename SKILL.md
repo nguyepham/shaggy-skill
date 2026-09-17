@@ -13,12 +13,12 @@ Use only this package for DevSkill runtime instructions. The package contains ru
 ## Entry and load order
 
 1. Read `manifest.json` for the runtime-file set.
-2. When admission is needed, load [Mode Gate](mode-gate.md); it returns an admitted profile and checkpoint-interception capability, or `mode_not_admitted`, to [Route](successor-v0/stage-0-route.md).
-3. When admission succeeds, load [Route](successor-v0/stage-0-route.md); it returns one family, overlay, or terminal and enters the selected owner's first declared checkpoint.
+2. At the first engineering-facing entry, load [Mode Gate](mode-gate.md) before Route, stage, module, inspection, delegation, or mutation. A matching delegated profile is the only reuse. Mode Gate returns an admitted Markdown-runtime profile with an optional checkpoint-interception capability, or `mode_not_admitted`, to [Route](successor-v0/stage-0-route.md).
+3. When admission succeeds, load [Route](successor-v0/stage-0-route.md); it returns one family, overlay, or terminal and starts the selected owner's first declared checkpoint.
 4. When Route selects a family, load that family and only the modules named by its Runtime calls; each operation returns through its bounded-closure result to its declared consumer.
-5. When Mode Gate resolves host-adapter selection for Rebon or OpenCode, load the matching host adapter; it returns exact capability or unavailable interception to Mode Gate. When findings are needed, load [Review](successor-v0/modules/review.md); it returns findings to the calling operation. An admitted Rebon operation loads [Rebon host adapter](successor-v0/modules/rebon-host-adapter.md) for native results.
+5. When code-level host enforcement is selected for Rebon, load [Rebon host adapter](successor-v0/modules/rebon-host-adapter.md); it returns `mutation-guarded` or `instruction-guided` to Mode Gate. When findings are needed, load [Review](successor-v0/modules/review.md); it returns findings to the calling operation. A selected Rebon-native operation loads the same adapter for its native result.
 
-Resolve all paths from this package root. Keep runtime checkpoints internal. State the selected host, mode, host-adapter choice, subagent use, and context optimization once when admission completes.
+Resolve all paths from this package root. Keep runtime checkpoints internal. State the selected host, mode, Rebon parallel strategy when selected, host-adapter result, subagent use, and context optimization once when admission completes. The Markdown runtime never requires a host adapter. Mode Gate performs native host-adapter probing, activation, status reads, profile writes, deactivation, and session-end release only for the optional enforcement overlay. A first-time adapter setup may require one fresh host session after the agent runs its package installer; otherwise never ask the user to run a host command, MCP method, slash command, launcher, or status check for admission.
 
 ## Runtime references
 
@@ -85,7 +85,7 @@ otherwise
 
 Do not run Decision for a determined mechanical, evidentiary, operational, or presentation step. Do not create a packet, controller, state wrapper, or whole-conversation reread to perform this check.
 
-Each local `## Checkpoints` table is the owning operation's declaration for [Host Enforcement](successor-v0/modules/host-enforcement.md). The table does not create a separate controller, record, or host claim. Route uses `enter` only for the first selected owner. Whenever a local `Allows` result selects a child module, declared return, or state-changing action, its owning caller uses `advance` to that exact next boundary before calling or advancing it. An intercepting host validates the current binding and replaces it with the declared next owner boundary; the callee starts only after that advance. Without interception, the caller follows the same declared transition as `instruction-guided`.
+Each local `## Checkpoints` table declares the owning operation's Markdown transition. Under active `mutation-guarded` enforcement, it also supplies the [Host Enforcement](successor-v0/modules/host-enforcement.md) binding. The table does not create a separate controller, record, or host claim. Route uses `enter` only for an active adapter's first selected owner. Whenever a local `Allows` result selects a child module, declared return, or state-changing action, its owning caller follows that exact next boundary. An intercepting host additionally validates and replaces its binding before the callee starts.
 
 ## Context and review
 
@@ -135,4 +135,4 @@ Show admission, focused questions, required corrections, approvals, and concise 
 
 ## Rebon boundary
 
-When Rebon is the admitted host, load [Rebon host adapter](successor-v0/modules/rebon-host-adapter.md); it returns native-tool results to its calling family or module. Other hosts do not use Rebon bindings.
+When a selected Rebon operation needs a native tool, load [Rebon host adapter](successor-v0/modules/rebon-host-adapter.md); it returns that native-tool result to its calling family or module. Other hosts do not use Rebon bindings.

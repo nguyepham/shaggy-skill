@@ -12,6 +12,7 @@ Run from an accepted specification. A user naming the module is sufficient. It d
 | Requirement coverage | Specification requirements and acceptance conditions the slice fulfills |
 | Scope | Transformation, inputs, exclusions, read/write ownership, and affected seam |
 | Dependencies | Only true blockers; no cycles or hidden shared-state conflicts |
+| Provisional resolution (optional) | Current outcome, remaining behavior, limitation, exact reconsideration event and evidence pointer, and final consumer for a Plan-mapped `future` outcome |
 | Completion | Verification, recovery path, exact next consumer, and any Plan-declared closure unit the slice contributes to |
 
 A vertical slice crosses the layers needed for one observable result and is demoable or verifiable alone. A wide mechanical change uses expand, migrate, contract: add the compatible form, move callers in independently valid batches, then remove the old form. The caller chooses any durable tracker or file location; this module returns the candidate set only.
@@ -21,6 +22,7 @@ A vertical slice crosses the layers needed for one observable result and is demo
 | When | Load | Return or use |
 |---|---|---|
 | An accepted specification must become Work slices | [Plan](../plan.md) | Candidate ticket set to Plan approval and Work handoff |
+| A Plan-mapped `future` outcome needs ticket representation | [Plan](../plan.md) | Exact optional provisional-resolution block; Plan retains lifecycle selection |
 | A ticket must define an executable Work slice | [Implementation and TDD](implementation-and-tdd.md) | Objective, scope, accepted seam, behavior test, verification, and consumer fields |
 | A ticket set conflicts with the requirement contract | [To-Spec](to-spec.md) or [Design](../design.md) | Corrected specification or Design meaning |
 | A partition or priority choice is semantic | [Review](review.md), then [Decision](decision.md) | Findings and semantic disposition for the ticket set |
@@ -37,8 +39,9 @@ A vertical slice crosses the layers needed for one observable result and is demo
 1. At `partition_started`, partition requirements into independently verifiable vertical slices with one observable outcome each.
 2. Put enabling work before dependent behavior. Use expand, migrate, contract for broad mechanical change; add an integration slice when intermediate batches cannot remain valid.
 3. Derive dependency edges from real prerequisites. Reject cycles, overlapping write ownership, and hidden shared-state conflicts.
-4. Bind every requirement and acceptance condition to at least one slice, with transformation, dependencies, read/write ownership, review surface, verification, recovery, consumer, and any Plan-declared closure unit.
-5. Use the Review and Decision reference for any semantic partition or priority choice, then return at `tickets_returned`.
+4. Copy a provisional-resolution block only from a Plan-mapped `future` outcome. Ordinary tickets omit it. The block never selects a future slice or changes its trigger.
+5. Bind every requirement and acceptance condition to at least one slice, with transformation, dependencies, read/write ownership, review surface, verification, recovery, consumer, and any Plan-declared closure unit.
+6. Use the Review and Decision reference for any semantic partition or priority choice, then return at `tickets_returned`.
 
 ## Returns
 

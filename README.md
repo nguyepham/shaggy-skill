@@ -1,4 +1,4 @@
-# DevSkill Unslop 2.3.0
+# DevSkill Unslop 2.4.1
 
 > AI can write code faster than you can regret the architecture.
 >
@@ -52,14 +52,14 @@ flowchart TB
 | Design | Codebase Design | Choose seams, modules, and dependencies |
 | Design | Improve Codebase Architecture | Surface evidence-backed architecture candidates |
 | Plan | Two-Layer Development Planning | Show workflow and structure together |
+| Plan | Wavefront Planning | Separate current work, triggered future work, and no-work decisions |
 | Plan | To-Spec | Shape accepted meaning into a specification |
 | Plan | To-Tickets | Form outcome-bearing vertical slices |
 | Work | Implementation and TDD | Change one accepted behavior at a time |
 | Work | Diagnosing Bugs | Narrow symptoms to a supported cause |
 | Work | Handoff and Boundaries | Transfer work across a real boundary |
 | Work | Context Optimization | Bound reading, reasoning, writing, and continuation |
-| Runtime | Rebon Host Adapter | Use Rebon-native tools and classify Guard capability |
-| Runtime | OpenCode Host Adapter | Classify OpenCode Guard capability |
+| Runtime | Rebon Host Adapter | Choose one-shot cards or full native coordination; optionally classify Guard capability |
 | Presentation | Write | Render reports, records, conversations, and instructions |
 | Presentation | Markdown Tables and Diagrams | Render a selected structure clearly |
 | Presentation | Writing Style | Select an explicit writing treatment |
@@ -88,6 +88,8 @@ flowchart TB
 This makes the skill usable without ritual prompts such as “now review,” “now research,” or “use TDD.” A direct request stays direct. An indirect engineering concern reaches Decision first, so the next step reflects the human goal instead of a guessed workflow.
 
 Every implementation slice receives Standards and Specification review. When accepted Design or final Grill decisions and the plan define one complete implementation, phase, roadmap, or merge outcome, that outcome receives the three-axis closure review. A checklist records the passed result; it does not choose the review.
+
+Wavefront planning keeps the forward-moving boundary honest: current work becomes a slice now; useful but non-blocking work waits for its stated trigger; excluded work stays excluded. It is based on Jonathan Blow's practice of reaching a useful approximation before spending effort on decisions that need more context.
 
 ## It refuses defensive busywork
 
@@ -122,7 +124,7 @@ Humans still own meaning, authority, and permissions.
 git clone https://github.com/shaggyfeng/Dev-Skill-Unslop.git
 ```
 
-The repository is the full installation: the DevSkill runtime plus Guard Core, Rebon, and OpenCode adapter source. Install the repository as `dev-skill` inside your agent’s skill directory, then follow an adapter guide only if you want host-side enforcement.
+The repository is the full installation: the DevSkill runtime plus Guard Core and Rebon adapter source. Install the repository as `dev-skill` inside your agent’s skill directory, then follow the Rebon guide only if you want host-side enforcement.
 
 For Codex:
 
@@ -134,7 +136,7 @@ Then describe the task normally. The skill routes the work.
 
 ### Full instruction-guided skill
 
-Download `DevSkill-Unslop-2.3.0-soft-guide.zip` when you want the complete DevSkill instruction set without host-enforcement code. It trusts the agent model to follow DevSkill directly; it contains no host-adapter source or optional npm host code and operates as `instruction-guided`.
+Download `DevSkill-Unslop-2.4.1-soft-guide.zip` when you want the complete DevSkill instruction set without host-enforcement code. It trusts the agent model to follow DevSkill directly; it contains no host-adapter source or optional npm host code and operates as `instruction-guided`.
 
 ### Add host enforcement
 
@@ -142,14 +144,13 @@ Start with the instruction-guided skill, then extract the shared Guard Core patc
 
 | Release asset | Install when | Requires |
 |---|---|---|
-| `DevSkill-Unslop-2.3.0-soft-guide.zip` | You trust the model to follow DevSkill | Nothing else |
-| `DevSkill-Unslop-2.3.0-guard-core-patch.zip` | You need code-level host enforcement | Instruction-guided skill |
-| `DevSkill-Unslop-2.3.0-rebon-adapter-patch.zip` | You use Rebon with enforcement | Instruction-guided skill + Guard Core |
-| `DevSkill-Unslop-2.3.0-opencode-adapter-patch.zip` | You use OpenCode with enforcement | Instruction-guided skill + Guard Core |
+| `DevSkill-Unslop-2.4.1-soft-guide.zip` | You trust the model to follow DevSkill | Nothing else |
+| `DevSkill-Unslop-2.4.1-guard-core-patch.zip` | You need code-level host enforcement | Instruction-guided skill |
+| `DevSkill-Unslop-2.4.1-rebon-adapter-patch.zip` | You use Rebon with enforcement | Instruction-guided skill + Guard Core |
 
-The instruction-guided skill is complete. Rebon and OpenCode patches add code-level behavior enforcement for weaker models; a smart model can follow the runtime instructions without them. Each host patch includes its setup guide.
+The instruction-guided skill is complete. The Rebon patch adds code-level behavior enforcement for weaker models; a smart model can follow the runtime instructions without it. The patch includes its setup guide.
 
-At Mode Gate, a supported host asks whether to use code-level enforcement or the instruction-guided skill. Start Rebon or OpenCode in that matching mode first: a live host hook cannot be switched on or off truthfully mid-session.
+Install a supported host adapter once. At Mode Gate, the host asks whether to use code-level enforcement or the instruction-guided skill. On a first Rebon enforcement choice, DevSkill runs the included installer and asks only for one fresh Rebon session. The installed hook remains dormant until enforcement is selected, then the adapter starts the Core and activates its current session. The soft choice deactivates it; host-session exit releases the Core.
 
 ## Author
 

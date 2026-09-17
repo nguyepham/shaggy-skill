@@ -23,21 +23,29 @@ async function bodyOf(request) {
 function dispatch(pathname, body) {
   switch (pathname) {
     case "/v1/admit": return guard.admit(body);
+    case "/v1/adapter/register": return guard.registerHook(body);
     case "/v1/adapter/announce": return guard.announceAdapter(body);
     case "/v1/enter": return guard.enter(body);
     case "/v1/authorize": return guard.authorize(body);
     case "/v1/advance": return guard.advance(body);
     case "/v1/reset": return guard.reset(body);
+    case "/v1/deactivate": return guard.deactivate(body);
+    case "/v1/release": return guard.release(body);
     default: return { ok: false, code: "not_found", message: "Unknown guard operation." };
   }
 }
 
-function shutdown(response) {
-  if (shuttingDown) return send(response, 200, { ok: true, shutdown: true });
+function closeServer() {
+  if (shuttingDown) return;
   shuttingDown = true;
-  send(response, 200, { ok: true, shutdown: true });
   server.close(() => process.exit(0));
   setTimeout(() => process.exit(0), 2_000).unref();
+}
+
+function shutdown(response) {
+  if (shuttingDown) return send(response, 200, { ok: true, shutdown: true });
+  send(response, 200, { ok: true, shutdown: true });
+  closeServer();
 }
 
 const server = http.createServer(async (request, response) => {
@@ -53,7 +61,8 @@ const server = http.createServer(async (request, response) => {
   if (url.pathname === "/v1/shutdown") return shutdown(response);
 
   try {
-    const result = dispatch(url.pathname, await bodyOf(request));
+    const body = await bodyOf(request);
+    const result = dispatch(url.pathname, body);
     return send(response, result.ok ? 200 : 409, result);
   } catch (error) {
     return send(response, 400, { ok: false, code: "invalid_request", message: error.message });

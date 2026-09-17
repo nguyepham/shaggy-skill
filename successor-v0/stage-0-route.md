@@ -34,15 +34,16 @@ Direct overlay precedes stage continuation. An overlay returns to its current st
 | A controlling fact is missing or facts are under fog | [Research](modules/research.md) | Evidence or factual frontier |
 | A human-only action is needed | [Manual Procedure](modules/manual-procedure.md) | Temporary procedure result |
 | Teaching or practice is needed | [Teaching](modules/teaching.md) | Learning result |
+| A named-scope planning cue asks what is current, later, deferred, or ready | [Plan](plan.md) | One bounded Plan-owned Wavefront option; no source reading before selection |
 | An active stage continues without an overlay | [Common Sense](modules/common-sense.md) | No reference or compact pattern reference before continuation |
 | No active stage or adequate direct route exists | [Project Discovery](modules/project-discovery.md), then [Common Sense](modules/common-sense.md) | Factual orientation and optional pattern reference |
-| Route has selected one family or overlay owner | [Host Enforcement](modules/host-enforcement.md) | Enter that owner's first declared checkpoint; capability status remains checkpoint-scoped |
+| Route has selected one family or overlay owner under `mutation-guarded` enforcement | [Host Enforcement](modules/host-enforcement.md) | Enter that owner's first declared checkpoint |
 
 ## Checkpoints
 
 | When | Checkpoint | Allows |
 |---|---|---|
-| One family or overlay owner is selected | `consumer_selected` | Host Enforcement enters the selected owner's first declared checkpoint |
+| One family or overlay owner is selected under `mutation-guarded` enforcement | `consumer_selected` | Host Enforcement enters the selected owner's first declared checkpoint |
 | Route produces a terminal | `terminal_compiled` | Return the exact Route terminal; no owner entry |
 
 ## Operation
@@ -56,20 +57,22 @@ Direct overlay precedes stage continuation. An overlay returns to its current st
 
    | Condition | Result |
    |---|---|
+   | Explicit Wavefront request or selected Plan-owned Wavefront option | Plan |
+   | Named-scope planning cue asks what is current, later, deferred, or ready | One bounded Plan-owned Wavefront option; no source reading before selection |
    | Valid direct trigger | Named overlay |
    | Accepted in-scope continuation | Continue active stage |
    | Bounded outcome with current accepted design meaning | Plan |
    | Outcome, constraint, trade-off, authority, or meaning unresolved | Design |
    | Current facts cannot distinguish the above | One focused clarification |
 7. When the selected result has a family or overlay owner, load its runtime module after admission and before execution. Check its trigger, prerequisites, authority limit, return route, consumer, and first declared checkpoint.
-8. When a family or overlay owner is selected, use the Host Enforcement Runtime call to enter that owner's first declared checkpoint. `instruction-guided` still requires that operation; it never becomes an `enforced` claim.
+8. When a family or overlay owner is selected under `mutation-guarded` enforcement, use the Host Enforcement Runtime call to enter that owner's first declared checkpoint. Otherwise start the owner's Markdown checkpoint directly.
 9. When Route produces a terminal, compile exactly that terminal without a Host Enforcement entry.
 
 ## Invariants
 
 - Route is a lifecycle skeleton; modules own detailed operations. Every operation has one owner.
 - Mode Gate alone owns provider/host evidence, suggestion, governance, mode, host, roadmap intent, admission, and re-entry.
-- `admitted` is profile capability only. A `current operation` starts only after Route selects an owner and its first checkpoint is entered.
+- `admitted` is profile capability only. A `current operation` starts after Route selects an owner and its first Markdown checkpoint begins; an active adapter additionally enters its held binding.
 - Direct overlay precedes active-stage continuation; overlay returns to its stage or requester without changing stage.
 - Indirect engineering intent that does not determine its next operation enters Decision. Decision returns Human Intent State, a factual gap, or a human question only; Route alone selects its consumer and terminal.
 - A Route terminal has no owner and never enters an owner checkpoint.

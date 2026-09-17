@@ -27,6 +27,7 @@ Positioning locates the relevant discipline, standard, primary record, or applie
 | When | Load | Return or use |
 |---|---|---|
 | Source alternatives or evidence boundaries create a semantic choice | [Review](review.md), then [Decision](decision.md) | Findings and semantic disposition outside Research |
+| Plan needs exact readiness evidence for a linked provisional resolution | [Plan](../plan.md) | Evidence, limits, and source pointer to Plan; Plan alone decides whether to re-enter the future outcome |
 | Missing information is human experience or value | [Grilling](grilling.md) or [Prototype](prototype.md) | Next human question or bounded experience evidence |
 | An eligible Work or Release outcome may add or remove a reusable note | [Review](review.md), then [Decision](decision.md) | Factual disposition before note mutation |
 
@@ -46,13 +47,14 @@ Positioning locates the relevant discipline, standard, primary record, or applie
 4. Apply Lexical Uplift: use the professional vocabulary needed to search, compare, and name the actual problem without inventing authority.
 5. When the task is under fog, Pathfinding maps the visible frontier: destination, known facts, unknown controlling facts, dependencies, excluded paths, and the next evidence question. It supplies a path, not a decision.
 6. Use the matching Runtime reference when source alternatives create a semantic choice or human experience or value is missing.
-7. At `research_returned`, return only the evidence, its limits, the knowledge model, and the next factual frontier to the caller.
+7. At `research_returned`, return only the evidence, its limits, the knowledge model, and the next factual frontier to the caller. For a linked provisional resolution, include its exact source pointer and whether the declared readiness condition changed; do not promote the outcome.
 
 ## Returns
 
 | Condition | Return |
 |---|---|
 | Controlling fact and model established | Evidence and knowledge model to caller |
+| Linked provisional readiness evidence | Exact evidence, limits, source pointer, and changed or unchanged condition to [Plan](../plan.md) |
 | Factual path remains under fog | Pathfinding frontier to caller |
 | Source alternatives need a choice | [Review](review.md), then [Decision](decision.md) |
 | Human experience or value is missing | [Grilling](grilling.md) or [Prototype](prototype.md) |

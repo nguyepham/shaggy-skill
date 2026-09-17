@@ -20,6 +20,7 @@ The prototype has one question, assumption, success criterion, falsification cri
 | When | Load | Return or use |
 |---|---|---|
 | Source facts can answer the question without an experiment | [Research](research.md) | Evidence to the originating caller |
+| Plan needs bounded readiness evidence for a linked provisional resolution | [Plan](../plan.md) | Observed evidence, limitation, and changed or unchanged criterion to Plan; Plan alone decides whether to re-enter the outcome |
 | Evidence creates a semantic choice | [Review](review.md), then [Decision](decision.md) | Findings and semantic disposition for the caller |
 | Bounded evidence must answer a human-owned question | [Grilling](grilling.md), [Design](../design.md), or [Plan](../plan.md) | Evidence to the owning question or stage |
 
@@ -36,7 +37,7 @@ The prototype has one question, assumption, success criterion, falsification cri
 2. Select the smallest disposable logic or UI experiment that can answer it. Keep one run instruction and all relevant state visible.
 3. For logic, prefer a portable core and thin disposable shell. For UI, compare structurally distinct variants in the existing host surface.
 4. Observe only the cases required by the criteria. Keep observation separate from interpretation.
-5. At `evidence_returned`, return `supported`, `falsified`, or `inconclusive`, plus limitations, reproduction, and affected work.
+5. At `evidence_returned`, return `supported`, `falsified`, or `inconclusive`, plus limitations, reproduction, and affected work. For a linked provisional resolution, state the exact criterion and whether it changed; do not promote the outcome.
 6. Use the Review and Decision reference for any choice created by the evidence.
 
 ## Returns
@@ -44,6 +45,7 @@ The prototype has one question, assumption, success criterion, falsification cri
 | Result | Consumer |
 |---|---|
 | Bounded evidence | [Grilling](grilling.md), [Design](../design.md), or [Plan](../plan.md) |
+| Linked provisional readiness evidence | Exact criterion, observation, limitation, and changed or unchanged result to [Plan](../plan.md) |
 | Need for source facts instead | [Research](research.md) |
 | Semantic choice | [Review](review.md), then [Decision](decision.md) |
 | Invalid premise or unavailable experiment | Originating caller |

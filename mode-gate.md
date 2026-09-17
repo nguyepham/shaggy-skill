@@ -2,22 +2,21 @@
 
 ## Contract
 
-Mode Gate alone owns provider and host evidence, suggested mode and host, host-adapter selection, human confirmation, governance, roadmap intent, capability validation, admission, and mode re-entry. Missing required evidence or capability returns `mode_not_admitted` before task work.
+Mode Gate alone owns provider and host evidence, suggested mode and host, optional Rebon parallel strategy and host-adapter selection, human confirmation, governance, roadmap intent, capability validation, admission, and mode re-entry. Only a selected mode or Rebon parallel strategy's missing capability returns `mode_not_admitted` before task work.
 
 ## Runtime references
 
 | When | Load | Return or use |
 |---|---|---|
-| The selected host is `rebon` and adapter selection must resolve | [Rebon host adapter](successor-v0/modules/rebon-host-adapter.md) | Exact Rebon capability or unavailable interception to Mode Gate |
-| The selected host is `opencode` and adapter selection must resolve | [OpenCode host adapter](successor-v0/modules/opencode-host-adapter.md) | Exact OpenCode capability or unavailable interception to Mode Gate |
-| A selected host's checkpoint interception capability must be classified | [Host Enforcement](successor-v0/modules/host-enforcement.md) | `checkpoint-capable` or unavailable interception; never a current operation or `enforced` claim |
+| Rebon may offer code-level enforcement | [Rebon host adapter](successor-v0/modules/rebon-host-adapter.md) | Optional `mutation-guarded` capability or `instruction-guided` to Mode Gate |
+| Code-level enforcement is active at an owner checkpoint | [Host Enforcement](successor-v0/modules/host-enforcement.md) | Exact guarded checkpoint result to its caller |
 | Admission confirms an optimized mode | [Context Optimization](successor-v0/modules/context-optimization.md) | Context-fit operation after admission; it never decides the mode |
 | Admission completes | [Route](successor-v0/stage-0-route.md) | One family, overlay, or Route terminal from the admitted profile |
 | An admitted governance problem changes design meaning, authority, or scope | [Grilling](successor-v0/modules/grilling.md) | Accepted rule or next question under the selected governance profile |
 
 ## Inputs
 
-Read trusted provider and host capability metadata without asking a provider question. When `devskill_guard_status` is available, its exact Rebon or OpenCode adapter record is named-adapter host evidence. Do not use model names or installed commands as host identity.
+Read trusted provider and host capability metadata without asking a provider question. A host adapter is optional enforcement evidence; it does not prove a mode or host identity. Do not use model names or installed commands as host identity.
 
 ## Evidence-based suggestion
 
@@ -27,16 +26,16 @@ Use trusted host or session metadata, then the named adapter configuration and d
 
 1. Trust runtime host/session metadata first.
 2. If a field remains unresolved, inspect only the named adapter's documented environment-variable names and host configuration or adapter probe. Do not enumerate arbitrary environment variables or infer locality from a model name, URL shape, or speed.
-3. Normalize evidence into provider kind, host kind, usable subagents, context capacity, workload request, display support, and available host-adapter capability. Keep only the current sources and classifications; never expose secret contents.
+3. Normalize evidence into provider kind, host kind, usable subagents, context capacity, workload request, and display support. Keep only the current sources and classifications; never expose secret contents.
 4. Compile at most one suggested mode and one suggested host with the supporting capability evidence. Conflicting evidence fails closed; do not merge profiles.
-5. Present one evidence-supported host and mode suggestion for human confirmation before mode selection. After a supported host resolves, collect its host-adapter selection. Governance never bypasses these confirmations.
+5. Present one evidence-supported host and mode suggestion for human confirmation before mode selection. After a supported host resolves, offer its host-adapter selection only when its nonblocking probe succeeds. Governance never bypasses these confirmations.
 6. Missing capability evidence, unresolved provider/session identity, or a conflicting suggestion returns the existing typed unresolved/admission failure. Never invent a suggestion or capability proof.
 
 Provider discovery authorizes DevSkill routing only; it does not grant project-runtime authority, approval, publication, or human decision power.
 
 ## Delegated profile
 
-A delegated task inherits its parent's admitted host, mode, host-adapter selection, and relevant task boundary. It does not rerun mode selection or prove nested subagent capacity. A changed host, mode, host-adapter selection, scope, or consumer returns to Mode Gate.
+A delegated task inherits its parent's admitted host, mode, Rebon parallel strategy, host-adapter selection, and relevant task boundary. It does not rerun mode selection or prove nested subagent capacity. A changed host, mode, Rebon parallel strategy, host-adapter selection, scope, or consumer returns to Mode Gate.
 
 ## Admission order
 
@@ -44,10 +43,11 @@ A delegated task inherits its parent's admitted host, mode, host-adapter selecti
 2. Without a valid inherited profile, read provider metadata and capability evidence before asking for mode, host, or roadmap intent.
 3. Normalize the evidence and compile one suggested host and mode.
 4. Ask the human to confirm the suggestion. If the human declines or evidence is unresolved, ask mode first from the four choices, then host. Do not inspect provider evidence again.
-5. When the selected host is `rebon` or `opencode`, ask whether to use its host adapter or stay soft-guide-only. Use the matching Runtime reference to classify the live host state.
-6. Resolve `roadmap_checkbox_update` after host-adapter selection and before implementation only when the task uses a roadmap checkbox. It records a later checklist update; it does not choose a review route or axis. Resolve governance only when the user names or accepts roadmap or session-goal continuation.
-7. At `admission_evaluated`, validate the selected mode against its applicable provider, host, host-adapter selection, subagent, planning-tool, structured-output, and handoff capabilities.
-8. At `admission_returned`, announce the admitted host, provider, mode, host-adapter selection, subagent use, Context Optimization use, and roadmap intent once. Admission is capability only: it does not begin an operation or authorize a state change. Use the matching Runtime reference after admission.
+5. When the selected host is `rebon` and the selected mode is parallel, resolve the Rebon parallel strategy.
+6. When the selected host has an adapter, use its matching Runtime reference to probe the current native bridge before presenting a host-adapter choice. A missing Rebon bridge with a package installer returns `adapter_setup_required`. After the human selected code-level enforcement, the adapter runs that installer and returns `adapter_restart_required`; tell the human to open one fresh Rebon session, then stop this admission. A failed probe without an installer retains `instruction-guided` and never changes mode admission. For a code-level choice with a live bridge, enable and read matching status. An enable, status, or profile-write failure retains `instruction-guided`, reports unavailable enforcement once, and continues admission. For the soft choice, disable a present bridge.
+7. Resolve `roadmap_checkbox_update` after host-adapter selection and before implementation only when the task uses a roadmap checkbox. It records a later checklist update; it does not choose a review route or axis. Resolve governance only when the user names or accepts roadmap or session-goal continuation.
+8. At `admission_evaluated`, validate the selected mode and Rebon parallel strategy against their capability: usable parallel execution for parallel modes, current direct one-shot `Agent` handle for `one-shot`, result-safe `Workflow` for `full-rebon`, structured persisted result plus bounded recovery for `parallel-optimized`, and planning tools plus durable handoff for `sequential-optimized`.
+9. At `admission_returned`, write the profile to Guard only when code-level enforcement remains `mutation-guarded`. Then announce the admitted host, provider, mode, Rebon parallel strategy when selected, host-adapter result, subagent use, Context Optimization use, and roadmap intent once. Admission is capability only: it does not begin an operation or authorize a state change.
 
 ## Admission representation
 
@@ -56,13 +56,14 @@ trusted evidence
   -> suggested host and mode
   -> confirmed suggestion | explicit mode choice
   -> host choice when required
-  -> host-adapter choice when supported
+  -> Rebon parallel strategy when applicable
+  -> optional host-adapter overlay
   -> roadmap or governance choice when relevant
   -> capability validation
   -> admitted | mode_not_admitted
 ```
 
-No state silently advances. Conflicting evidence, unresolved identity, missing required capability, or an invalid host-mode pairing returns `mode_not_admitted` and asks only for the missing decision.
+No state silently advances. Conflicting evidence, unresolved identity, a missing selected-mode capability, or an invalid host-mode pairing returns `mode_not_admitted` and asks only for the missing decision. Missing enforcement retains `instruction-guided`.
 
 ## Checkpoints
 
@@ -97,33 +98,48 @@ If a trusted user-authored mode preference exists in agent memory, announce it a
 | `sequential-normal` | sequential execution |
 | `sequential-optimized` | sequential execution, planning tools, and durable handoff |
 
+Use current host capability evidence for the selected mode only. Host adapters, Guard status, task ledgers, and host-specific operation tools never participate in mode admission.
+
 On missing capability, return `mode_not_admitted`, identify the missing capability, and show the four choices again. Do not silently change the mode.
 
+After admission, a selected operation can lose a host-native tool without changing the admitted profile. Its owning adapter returns current-operation recovery; it never retroactively returns `mode_not_admitted` or silently changes mode.
+
 `sequential-optimized` requires a usable continuation location. Missing continuation capability returns `mode_not_admitted`; it does not permit an oversized direct read.
+
+## Rebon parallel strategy
+
+Resolve only when host is `rebon` and mode is `parallel-normal` or `parallel-optimized`. Ask exactly:
+
+> For Rebon parallel work, use one-shot subagents only or the full Rebon toolset?
+
+| Choice | Native path | Required capability |
+|---|---|---|
+| `one-shot` | Direct `Agent` fan-out, collection, fan-in, and verification | Current direct `Agent` handle; terminal return with a declared result target for each card |
+| `full-rebon` | Current Rebon Workflow, task, planning, team, and structured-output operations when selected | Result-safe current `Workflow`; plus structured persisted result for optimized mode |
+
+`Not sure, help me narrowing it down.` is decision support, not a third strategy: ask one question about whether the work needs only independent one-shot cards or Rebon-native Workflow coordination. A missing selected strategy capability returns `mode_not_admitted` and shows these two choices again. Task or planning tools absent from an operation that does not need them never reject either strategy.
 
 ## Host
 
 | Evidence | Host |
 |---|---|
 | Trusted Rebon runtime metadata | `rebon` |
-| `devskill_guard_status` returns the exact Rebon adapter record | `rebon` |
-| `devskill_guard_status` returns the exact OpenCode adapter record | `opencode` |
-| Trusted OpenCode runtime metadata | `opencode` |
+| Rebon's native MCP bridge is available | `rebon` |
 | Trusted non-Rebon runtime metadata | `non-rebon` |
 | No trusted host identity | ask one host question; remain non-admitted until answered |
 
 ## Host-adapter selection
 
-Only `rebon` and `opencode` have a host-adapter choice. Ask exactly:
+Only a supported host with a current native bridge has a host-adapter choice. The agent runs the matching adapter availability operation before asking. Ask exactly:
 
 > Use code-level host enforcement for this session, or use the instruction-guided skill?
 
 | Choice | Choose when | Required live state | Result |
 |---|---|---|
-| Use code-level enforcement | A weaker model needs host-side behavior enforcement | Matching adapter reports `mutation-guarded` | Retain `mutation-guarded` for Host Enforcement classification |
-| Use instruction-guided skill | A smart model can follow the runtime instructions directly | Matching adapter is unavailable | Retain `instruction-guided` |
+| Use code-level enforcement | A weaker model needs host-side behavior enforcement | Matching bootstrap enables and then reports `mutation-guarded` | Retain `mutation-guarded` for Host Enforcement classification |
+| Use instruction-guided skill | A smart model can follow the runtime instructions directly | Deactivate a matching bootstrap when present; no bootstrap is required | Retain `instruction-guided` |
 
-An enabled hook cannot be disabled truthfully after the host has started. If the selected choice and live state differ, return `mode_not_admitted`: start the host through its guarded launcher for the first choice, or restart it through its no-guard launcher for the second. Re-enter Mode Gate after restart. Non-supported hosts have no host-adapter choice and remain `instruction-guided`.
+The matching adapter owns first-time setup, bootstrap, native status, bounded recovery, and session lifecycle. On `adapter_setup_required`, it runs its package installer after the human selected code-level enforcement; `adapter_restart_required` asks the human only to open one fresh host session. Otherwise the agent invokes its native bridge directly and never tells the user to run a slash command or launcher. Call `devskill_guard_enable`, then require matching status; after base admission completes, write the profile with `devskill_guard_admit` and reread status. The configured bridge supplies its exact host adapter and session. On any adapter failure, retain `instruction-guided` and continue the admitted Markdown runtime without an enforcement claim. On the soft choice, deactivate a present bridge; otherwise remain `instruction-guided`. The native hook remains dormant and session end releases it and stops the Core. A host without a current bridge or installer has no host-adapter choice and remains `instruction-guided`.
 
 An installed command, provider, model, endpoint, or Agent capability does not establish host identity.
 
@@ -157,19 +173,18 @@ Announce the selected profile once — with the admitted profile when governance
 
 ## Admission result
 
-Admission requires resolved host, provider, mode, host-adapter selection when supported, and capability fit. It also requires a roadmap answer only when the task uses a roadmap checkbox and a governance answer only for session or roadmap continuation. Plan selects any later closure unit from the final Grilling record and matching plan. `route_status=admitted` is required before repository work, but it is not a current operation, mutation authority, or generic activation marker.
-
-When the host is Rebon, admission also requires the Rebon adapter to confirm the selected native tool path. Its Guard capability must match the selected host-adapter choice.
+Admission requires resolved host, provider, mode, applicable Rebon parallel strategy, and selected capability fit. It also requires a roadmap answer only when the task uses a roadmap checkbox and a governance answer only for session or roadmap continuation. Host-adapter selection changes only the enforcement overlay. Plan selects any later closure unit from the final Grilling record and matching plan. `route_status=admitted` is required before repository work, but it is not a current operation, mutation authority, or generic activation marker.
 
 ## Recovery
 
 - Missing provider/session identity or conflicting evidence returns the typed unresolved/admission failure; it cannot produce an admitted profile or invented suggestion.
 - Missing host identity returns one host question and remains non-admitted.
-- Missing mode capability returns `mode_not_admitted` without changing the selected value.
-- A supported-host adapter selection that differs from live host state returns `mode_not_admitted` and requires the matching guarded or no-guard host restart.
+- Missing mode or Rebon parallel strategy capability returns `mode_not_admitted` without changing the selected value.
+- A selected Rebon code-level adapter with no current bridge but a package installer returns `adapter_setup_required`; after the installer runs, `adapter_restart_required` stops admission until one fresh Rebon session exists.
+- A selected code-level host adapter bootstrap, matching status, or profile write is missing retains `instruction-guided`; it never changes mode admission.
 - Conflicting or insufficient provider evidence returns the typed unresolved/admission failure; it never produces an invented suggestion or silently changes the selected mode.
-- Changed host, provider, mode, host-adapter selection, roadmap-checkbox intent, or governance profile invalidates the profile and reruns admission order.
+- Changed host, provider, mode, Rebon parallel strategy, roadmap-checkbox intent, or governance profile invalidates the profile and reruns admission order. A host-adapter change reclassifies the enforcement overlay only.
 
 ## Completion
 
-Complete only when the profile fields are present, capability validation passes, the host adapter is admitted when applicable, and `route_status=admitted`.
+Complete only when the profile fields are present, selected-mode capability validation passes, and `route_status=admitted`.

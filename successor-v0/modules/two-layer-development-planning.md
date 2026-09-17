@@ -13,6 +13,8 @@ Run when a consequential Design or Plan workflow spans multiple operations, bran
 
 The views share the same consequential steps. A helper appears only when it affects a public seam, authority boundary, handoff, or independently testable outcome. The paired view is planning material, not a replacement for accepted decisions, specifications, tests, or project state.
 
+When Plan uses Wavefront planning, include one paired row for each consequential accepted decision: source decision, `current`, `future`, or `no Work` disposition, current outcome, and, for `future`, reconsideration event, evidence pointer, and final consumer. The paired view represents Plan's mapping; it does not select, store, or promote it.
+
 The caller supplies any durable planning location. This module returns the paired candidate and does not create a planning record on its own.
 
 ## Runtime references
@@ -35,7 +37,8 @@ The caller supplies any durable planning location. This module returns the paire
 2. For each consequential step, add a Structure and Authority view: input, representation, source, actor, output, validator or decision actor, consumer, authority gained, and authority not gained.
 3. Exclude helpers that affect no public seam, authority boundary, handoff, or independently testable outcome.
 4. Check that every consequential workflow edge has a matching structure row and every row has a usable consumer.
-5. Return mismatches to the owner. Use the Review and Decision reference for any semantic choice, then return at `paired_view_returned`.
+5. When Plan uses Wavefront planning, add only its consequential decision-to-outcome rows; omit ordinary planning outcomes.
+6. Return mismatches to the owner. Use the Review and Decision reference for any semantic choice, then return at `paired_view_returned`.
 
 ## Returns
 

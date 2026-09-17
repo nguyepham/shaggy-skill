@@ -23,6 +23,7 @@ Release owns reconciliation, lifecycle order, result consumption, effect or term
 | Release needs bounded human-experience evidence | [Prototype](modules/prototype.md) | Evidence to Release |
 | Human-owned release meaning, priority, or authority is unresolved | [Grilling](modules/grilling.md) | Accepted rule or next human question to Release |
 | A Plan-declared phase, roadmap, or merge unit needs closure | [Review](modules/review.md), then [Decision](modules/decision.md) | Three-axis findings and disposition to the declared closure consumer |
+| A Plan-declared operating milestone or shipment closure has linked provisional resolutions | [Plan](plan.md) | Linked resolutions become current implementation, already-covered exact accepted scope, or a Grilling scope amendment |
 | A compatible host enters or advances a Release boundary | [Host Enforcement](modules/host-enforcement.md) | Checkpoint-scoped reconciliation, effect, or return; `instruction-guided` when no interception exists |
 
 Only a Plan-declared closure unit uses the closure review topology. A non-effect result is a valid release terminal when no eligible lifecycle mutation exists.
@@ -39,8 +40,9 @@ Only a Plan-declared closure unit uses the closure review topology. A non-effect
 
 1. Enter `reconciliation_started` for the current Work result.
 2. At `effect_ready`, use the declared Domain Modeling, Review, Decision, Common Sense, or Research call. Release never invents an eligible effect.
-3. For a Plan-declared phase, roadmap, or merge unit, return only after `closure_returned`; Review and Decision findings determine its declared closure disposition.
-4. Apply bounded closure to a release result. A determined result uses its declared terminal; a factual gap uses Research, an experience gap uses Prototype or human, human-owned meaning uses Grilling, and a frozen semantic candidate uses Review then Decision.
+3. At a Plan-declared operating milestone or shipment closure, send only its linked provisional resolutions to Plan. Release never scans or closes an unlinked deferred item.
+4. For a Plan-declared phase, roadmap, or merge unit, return only after `closure_returned`; Review and Decision findings determine its declared closure disposition.
+5. Apply bounded closure to a release result. A determined result uses its declared terminal; a factual gap uses Research, an experience gap uses Prototype or human, human-owned meaning uses Grilling, and a frozen semantic candidate uses Review then Decision.
 
 ## Terminals
 

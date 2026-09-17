@@ -6,16 +6,15 @@ Optional host integrations. Without an installed adapter, DevSkill remains `inst
 
 The repository already contains every adapter source. Use this folder directly after a full repository install.
 
-If you installed `DevSkill-Unslop-2.3.0-soft-guide.zip` instead, you have the full instruction-guided skill: it trusts the model to follow DevSkill without host-enforcement code. Add the shared `DevSkill-Unslop-2.3.0-guard-core-patch.zip`, then one host patch into that same skill folder only when code-level enforcement is needed.
+If you installed `DevSkill-Unslop-2.4.1-soft-guide.zip` instead, you have the full instruction-guided skill: it trusts the model to follow DevSkill without host-enforcement code. Add the shared `DevSkill-Unslop-2.4.1-guard-core-patch.zip`, then one host patch into that same skill folder only when code-level enforcement is needed.
 
 | Host | Patch | Next step |
 |---|---|---|
-| Rebon | `DevSkill-Unslop-2.3.0-rebon-adapter-patch.zip` | [Rebon setup](./rebon/README.md) |
-| OpenCode | `DevSkill-Unslop-2.3.0-opencode-adapter-patch.zip` | [OpenCode setup](./opencode/README.md) |
+| Rebon | `DevSkill-Unslop-2.4.1-rebon-adapter-patch.zip` | [Rebon setup](./rebon/README.md) |
 
 The Core patch is shared. Do not install a host patch without it.
 
-At DevSkill admission, Rebon and OpenCode ask whether to use code-level enforcement or the instruction-guided skill. Choose the adapter when a weaker model needs host-side behavior enforcement; a smart model can use the instruction-guided skill directly. Choose the matching launcher before the session starts; the selection checks live host state and does not toggle an already-running hook.
+Install the Rebon adapter once. At DevSkill admission, Rebon asks whether to use code-level enforcement or the instruction-guided skill. The host bootstrap stays dormant until code-level enforcement is selected, then starts the Core and activates the matching adapter. The soft choice deactivates it; host-session exit releases the Core. A smart model can use the instruction-guided skill directly.
 
 ## Boundary
 
@@ -57,9 +56,6 @@ host-adapters/
     shared guard and MCP server
   rebon/
     Rebon session plugin and launcher
-  <host>/
-    README.md
-    source and host configuration
 ```
 
 Adapters are optional integration packages. Do not add them to `manifest.json` runtime files.
