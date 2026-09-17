@@ -5,7 +5,6 @@ set "ADAPTER_DIR=%~dp0"
 if not defined DEVSKILL_GUARD_PORT set "DEVSKILL_GUARD_PORT=7636"
 if not defined DEVSKILL_GUARD_URL set "DEVSKILL_GUARD_URL=http://127.0.0.1:%DEVSKILL_GUARD_PORT%"
 if "%DEVSKILL_GUARD_URL:~-1%"=="/" set "DEVSKILL_GUARD_URL=%DEVSKILL_GUARD_URL:~0,-1%"
-set "DEVSKILL_GUARD_SESSION=rebon-default"
 set "REBON_BIN=E:\AI\RebonPC\rebon-cli.exe"
 if not exist "%REBON_BIN%" set "REBON_BIN=rebon"
 

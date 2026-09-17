@@ -18,6 +18,7 @@ $coreServer = $coreServerPath.Replace('\', '/')
 $hook = (Join-Path $hostAdaptersRoot 'rebon\rebon-guard-hook.mjs').Replace('\', '/')
 $configPath = Join-Path $rebonRoot 'config.json'
 $settingsPath = Join-Path $rebonRoot 'settings.json'
+$stateRoot = Join-Path $rebonRoot 'devskill-guard'
 
 function ConvertTo-Hashtable($value) {
   if ($null -eq $value) { return $null }
@@ -49,10 +50,11 @@ function Read-Object([string]$path) {
 
 function Hook([string]$event, [string]$tool = '') {
   $suffix = if ($tool) { "--tool $tool" } else { "--event $event" }
+  $stateCommand = $stateRoot.Replace("'", "''")
   $entry = @{
     hooks = @(@{
       type = 'command'
-      command = ('& "' + $nodeCommand + '" "' + $hook + '" ' + $suffix)
+      command = ('$env:DEVSKILL_GUARD_STATE_DIR = ''' + $stateCommand + '''; & "' + $nodeCommand + '" "' + $hook + '" ' + $suffix)
       shell = 'powershell'
       timeout = 5
     })
@@ -62,6 +64,7 @@ function Hook([string]$event, [string]$tool = '') {
 }
 
 New-Item -ItemType Directory -Path $rebonRoot -Force | Out-Null
+New-Item -ItemType Directory -Path $stateRoot -Force | Out-Null
 
 $nodeCommand = (Get-Command node -ErrorAction Stop).Source
 if (-not (Test-Path -LiteralPath $nodeCommand)) { throw 'Node executable was not found.' }
@@ -81,8 +84,8 @@ $config.mcpServers.devskill_guard = @{
   args = @($coreServer)
   env = @{
     DEVSKILL_GUARD_URL = 'http://127.0.0.1:7636'
-    DEVSKILL_GUARD_SESSION = 'rebon-default'
     DEVSKILL_GUARD_ADAPTER = 'rebon'
+    DEVSKILL_GUARD_STATE_DIR = $stateRoot
   }
 }
 
@@ -105,3 +108,4 @@ foreach ($event in $hookEvents.Keys) {
 $config | ConvertTo-Json -Depth 32 | Set-Content -LiteralPath $configPath -Encoding utf8
 $settings | ConvertTo-Json -Depth 32 | Set-Content -LiteralPath $settingsPath -Encoding utf8
 Write-Output 'DevSkill Rebon adapter installed. Open a fresh Rebon session once to load the MCP bridge and hooks.'
+exit 0

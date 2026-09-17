@@ -14,6 +14,7 @@ Use only when an active `mutation-guarded` adapter must enter or advance an owni
 | `enforced` | The host can intercept the exact current checkpoint |
 | `mutation-guarded` | A trusted host adapter intercepts only a matching state-changing tool action and exact target; it is not checkpoint, route, or presentation enforcement |
 | `instruction-guided` | The host cannot intercept that checkpoint; the instruction still applies |
+| `guard_lapsed` | A previously active adapter lost Core state; the state-changing action is rejected and Mode Gate must create a new admitted binding |
 
 ## Interactions
 
@@ -32,6 +33,7 @@ The current binding contains only admitted profile, current transition, active m
 3. At `enter`, a host with exact interception creates and holds the current binding only for the first checkpoint declared by Route's selected owner.
 4. At `advance`, a host with exact interception matches the current result or requested action and target to that binding, then replaces it with the declared next owner boundary before allowing its checkpoint, return, or state-changing action.
 5. Reject an out-of-sequence guarded action or progression without changing state and return it to the active owning operation.
+6. On `guard_lapsed`, do not retry the action or preserve an `enforced` claim. Return to Mode Gate; it re-enables the selected adapter, admits the profile, and enters a new current binding before the operation resumes.
 
 ## Returns
 
@@ -40,5 +42,6 @@ The current binding contains only admitted profile, current transition, active m
 | Interception capability | Mode Gate |
 | Entered or advanced checkpoint | Calling Route or owning operation |
 | Rejected checkpoint | Active owning operation recovery or declared return |
+| `guard_lapsed` | Mode Gate, then the active owning operation |
 
 Host Enforcement verifies sequence, not Human Intent, Value Gap, semantic quality, route, review, authority, or completion. A host without interception remains `instruction-guided`; it never claims enforcement.

@@ -8,7 +8,7 @@ Run the installer once. It installs Guard Core's locked npm dependency, then wri
 
 The configuration uses the installed Node executable directly, independent of Desktop's `PATH`.
 
-At Mode Gate, choosing code-level enforcement starts the Core, activates `rebon`, and writes the admitted profile; choosing the instruction-guided skill deactivates it but retains the dormant hook for same-session re-entry. Session end releases the Guard and stops its Core when no Rebon session remains.
+At Mode Gate, choosing code-level enforcement starts or restores the host-scoped Core, activates `rebon` for the current trusted Rebon session, and writes the admitted profile; choosing the instruction-guided skill deactivates it but retains the dormant hook for same-session re-entry. Session end releases only that session. If Core state is lost, the hook rejects the next mutation with `guard_lapsed`; Mode Gate re-enables and re-enters before work continues.
 
 `rebon-adapter.bat` is a launcher and installer menu.
 
@@ -48,8 +48,8 @@ Other MCP servers and Rebon tools are outside this adapter's mutation scope. Thi
 
 In the same Rebon session:
 
-1. Use Rebon's native `Mcp` tool with `server: "devskill_guard"` and `name: "devskill_guard_enable"`. Do not search individual Guard method names with `ToolSearch`.
-2. Call `devskill_guard_admit` with host `rebon` and the selected mode. The configured bridge supplies `session_id: "rebon-default"`.
+1. Read trusted Rebon session metadata. Use Rebon's native `Mcp` tool with `server: "devskill_guard"`, `name: "devskill_guard_enable"`, and that exact `session_id`. Do not search individual Guard method names with `ToolSearch`.
+2. Pass the same `session_id` to `devskill_guard_admit` with host `rebon` and the selected mode. Reuse it for every Guard call.
 3. Call `devskill_guard_enter` with `allowed_actions: ["mutation"]` and one exact target path.
 4. Ask Rebon to write that exact path. It should be allowed.
 5. Ask it to write a different path. Rebon must show a Guard rejection before the write runs.
