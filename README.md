@@ -124,7 +124,7 @@ Humans still own meaning, authority, and permissions.
 git clone https://github.com/shaggyfeng/Dev-Skill-Unslop.git
 ```
 
-The repository is the full installation: the DevSkill runtime plus Guard Core and Rebon adapter source. Install the repository as `dev-skill` inside your agent’s skill directory, then follow the Rebon guide only if you want host-side enforcement.
+The repository is the full installation: the DevSkill runtime plus Guard Core and Rebon adapter source. Install the repository as `dev-skill` inside your agent’s skill directory. The first selected Rebon enforcement session installs Guard Core's locked npm dependency, configures the bridge, and asks only for one fresh Rebon session.
 
 For Codex:
 
@@ -150,7 +150,7 @@ Start with the instruction-guided skill, then extract the shared Guard Core patc
 
 The instruction-guided skill is complete. The Rebon patch adds code-level behavior enforcement for weaker models; a smart model can follow the runtime instructions without it. The patch includes its setup guide.
 
-Install a supported host adapter once. At Mode Gate, the host asks whether to use code-level enforcement or the instruction-guided skill. On a first Rebon enforcement choice, DevSkill runs the included installer and asks only for one fresh Rebon session. The installed hook remains dormant until enforcement is selected, then the adapter starts the Core and activates its current session. The soft choice deactivates it; host-session exit releases the Core.
+Install a supported host adapter once. At Mode Gate, the host asks whether to use code-level enforcement or the instruction-guided skill. On a first Rebon enforcement choice, DevSkill installs the locked Guard Core dependency, configures the bridge, and asks only for one fresh Rebon session. The installed hook remains dormant until enforcement is selected, then the adapter starts the Core and activates its current session. The soft choice deactivates it; host-session exit releases the Core.
 
 ## Author
 

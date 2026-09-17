@@ -12,7 +12,9 @@ if (-not $rebonRoot) { $rebonRoot = Join-Path $userProfile '.rebon' }
 $installedPackageRoot = Join-Path $rebonRoot 'skills\dev-skill'
 $packageRoot = if (Test-Path -LiteralPath (Join-Path $installedPackageRoot 'host-adapters\guard-core\src\mcp-server.mjs')) { $installedPackageRoot } else { $sourcePackageRoot }
 $hostAdaptersRoot = Join-Path $packageRoot 'host-adapters'
-$coreServer = (Join-Path $hostAdaptersRoot 'guard-core\src\mcp-server.mjs').Replace('\', '/')
+$coreRoot = Join-Path $hostAdaptersRoot 'guard-core'
+$coreServerPath = Join-Path $coreRoot 'src\mcp-server.mjs'
+$coreServer = $coreServerPath.Replace('\', '/')
 $hook = (Join-Path $hostAdaptersRoot 'rebon\rebon-guard-hook.mjs').Replace('\', '/')
 $configPath = Join-Path $rebonRoot 'config.json'
 $settingsPath = Join-Path $rebonRoot 'settings.json'
@@ -63,6 +65,14 @@ New-Item -ItemType Directory -Path $rebonRoot -Force | Out-Null
 
 $nodeCommand = (Get-Command node -ErrorAction Stop).Source
 if (-not (Test-Path -LiteralPath $nodeCommand)) { throw 'Node executable was not found.' }
+$npmCommand = (Get-Command npm -ErrorAction Stop).Source
+if (-not (Test-Path -LiteralPath $coreServerPath)) { throw 'Guard Core MCP server was not found.' }
+
+$coreDependency = Join-Path $coreRoot 'node_modules\@modelcontextprotocol\sdk\package.json'
+if (-not (Test-Path -LiteralPath $coreDependency)) {
+  & $npmCommand --prefix $coreRoot ci
+  if ($LASTEXITCODE -ne 0) { throw 'Guard Core dependency installation failed.' }
+}
 
 $config = Read-Object $configPath
 if (-not $config.ContainsKey('mcpServers')) { $config.mcpServers = @{} }

@@ -4,7 +4,7 @@ This is a Rebon bootstrap plus the shared DevSkill Guard MCP bridge.
 
 ## Start
 
-Run the installer once. It writes Rebon's persistent MCP and hook configuration to Rebon's active configuration home, targeting the installed DevSkill package when present. After that, open Rebon Desktop normally; a fresh session materializes the bridge.
+Run the installer once. It installs Guard Core's locked npm dependency, then writes Rebon's persistent MCP and hook configuration to Rebon's active configuration home, targeting the installed DevSkill package when present. After that, open Rebon Desktop normally; a fresh session materializes the bridge.
 
 The configuration uses the installed Node executable directly, independent of Desktop's `PATH`.
 

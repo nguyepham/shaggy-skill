@@ -14,7 +14,7 @@ If you installed `DevSkill-Unslop-2.4.1-soft-guide.zip` instead, you have the fu
 
 The Core patch is shared. Do not install a host patch without it.
 
-Install the Rebon adapter once. At DevSkill admission, Rebon asks whether to use code-level enforcement or the instruction-guided skill. The host bootstrap stays dormant until code-level enforcement is selected, then starts the Core and activates the matching adapter. The soft choice deactivates it; host-session exit releases the Core. A smart model can use the instruction-guided skill directly.
+Install the Rebon adapter once. At DevSkill admission, Rebon asks whether to use code-level enforcement or the instruction-guided skill. The first enforcement selection installs Guard Core's locked npm dependency, configures the bridge, and needs one fresh Rebon session. The host bootstrap stays dormant until code-level enforcement is selected, then starts the Core and activates the matching adapter. The soft choice deactivates it; host-session exit releases the Core. A smart model can use the instruction-guided skill directly.
 
 ## Boundary
 

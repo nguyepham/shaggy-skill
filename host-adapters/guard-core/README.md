@@ -8,8 +8,10 @@ admit -> enter -> authorize mutation -> advance | reset
 
 ## Start
 
+The Rebon installer runs `npm ci` automatically. For a manual Core start:
+
 ```powershell
-npm install
+npm ci
 node src/http-server.mjs
 ```
 
